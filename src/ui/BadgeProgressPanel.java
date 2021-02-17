@@ -1,7 +1,6 @@
 package ui;
 
 import ui.components.IconCaptionButton;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
