@@ -1,0 +1,11 @@
+{
+  "name": "Badge 5",
+  "description": "This is a first badge",
+  "steps": [
+    "First Step",
+    "Second Step",
+    "Third Step",
+    "Fourth Step",
+    "Fifth Step"
+  ]
+}

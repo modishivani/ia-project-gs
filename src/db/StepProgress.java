@@ -9,8 +9,6 @@ public class StepProgress {
         this.isCompleted = false;
     }
 
-
-
     public boolean isCompleted() {
         return isCompleted;
     }

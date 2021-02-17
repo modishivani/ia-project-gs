@@ -1,15 +1,16 @@
 package db;
 
-public class Event {
+import java.util.Date;
+
+public class EventInformation {
     private String name;
-    private String date;
+    private Date date;
     private String description;
     private Boolean completed;
 
 
-    public Event() {
+    public EventInformation() {
     }
-
 
     public String getName() {
         return name;
@@ -19,11 +20,11 @@ public class Event {
         this.name = name;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

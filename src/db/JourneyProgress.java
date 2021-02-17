@@ -14,7 +14,14 @@ public class JourneyProgress {
         for (int i = 0; i < steps.length; i++) {
             this.stepProgress[i] = new StepProgress(steps[i]);
         }
+    }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public StepProgress[] getStepProgress() {
+        return this.stepProgress;
     }
 }
 

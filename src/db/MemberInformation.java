@@ -1,6 +1,8 @@
 package db;
 
-public class Member {
+import java.util.ArrayList;
+
+public class MemberInformation {
 
     private String name;
     private String age;
@@ -8,12 +10,13 @@ public class Member {
     private String email;
     private String parentName;
     private String parentEmail;
-    private BadgeProgress badgeProgress;
-    private JourneyProgress journeyProgress;
+    private ArrayList<BadgeProgress> badgeProgress;
+    private ArrayList<JourneyProgress> journeyProgress;
 
-    public Member() {
+    public MemberInformation() {
+        this.badgeProgress = new ArrayList<>();
+        this.journeyProgress = new ArrayList<>();
     }
-
 
     public String getName() {
         return name;
@@ -63,19 +66,11 @@ public class Member {
         this.parentEmail = parentEmail;
     }
 
-    public BadgeProgress getBadgeProgress() {
+    public ArrayList<BadgeProgress> getBadgeProgress() {
         return badgeProgress;
     }
 
-    public void setBadgeProgress(BadgeProgress badgeProgress) {
-        this.badgeProgress = badgeProgress;
-    }
-
-    public JourneyProgress getJourneyProgress() {
+    public ArrayList<JourneyProgress> getJourneyProgress() {
         return journeyProgress;
-    }
-
-    public void setJourneyProgress(JourneyProgress journeyProgress) {
-        this.journeyProgress = journeyProgress;
     }
 }
