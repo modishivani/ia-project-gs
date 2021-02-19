@@ -16,7 +16,10 @@ public class Database {
     private final String troopNo;
     private final String year;
 
+    private final String membersDirectory;
     private final String badgesDirectory;
+    private final String journeysDirectory;
+    private final String eventsDirectory;
 
     public Database(
         String troopNo,
@@ -26,9 +29,81 @@ public class Database {
         this.troopNo = troopNo;
         this.year = year;
 
+        this.membersDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "members").toString();
+        EnsureDirectory(this.membersDirectory);
+
         this.badgesDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "badges").toString();
         EnsureDirectory(this.badgesDirectory);
+
+        this.journeysDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "journeys").toString();
+        EnsureDirectory(this.journeysDirectory);
+
+        this.eventsDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "events").toString();
+        EnsureDirectory(this.eventsDirectory);
     }
+    /*
+       Members
+    */
+    public void addMember(
+            MemberInformation memberInformation) {
+
+        if (memberInformation.getName() == null) {
+            //throw exception
+        }
+
+
+        writeObject(
+                memberInformation,
+                getMemberFileName(memberInformation.getName())
+        );
+    }
+
+    public void removeMember(
+            String name) {
+        String memberFileName = getMemberFileName(name);
+        File memberFile = new File(memberFileName);
+        if (memberFile.exists()) {
+            memberFile.delete();
+        }
+    }
+
+    public void modifyMember(MemberInformation memberInformation) {
+
+        addMember(memberInformation);
+    }
+
+    public ArrayList<String> listMemberNames() {
+
+        ArrayList<String> memberNames = new ArrayList<>();
+        File memberDirectory = new File(this.membersDirectory);
+        String[] files = memberDirectory.list();
+
+        if (files != null) {
+            for (String fileName : files) {
+                if (fileName.endsWith(".json")) {
+                    fileName = fileName.substring(0, fileName.length() - 5);
+                    memberNames.add(fileName);
+                }
+            }
+        }
+
+        return memberNames;
+    }
+
+    public MemberInformation getMember(
+            String name) {
+
+        return (MemberInformation) readObject(
+                getMemberFileName(name),
+                MemberInformation.class
+        );
+    }
+
+
+    private String getMemberFileName(String name) {
+        return Paths.get(this.membersDirectory, name + ".json").toString();
+    }
+
 
     /*
       Badges
@@ -36,8 +111,10 @@ public class Database {
     public void addBadge(
         BadgeInformation badgeInformation) {
 
-        // add validation and throw exception
-        // if the badgeInformation.name is null
+        if (badgeInformation.getName() == null) {
+            //throw exception
+        }
+
 
         writeObject(
             badgeInformation,
@@ -52,6 +129,12 @@ public class Database {
         if (badgeFile.exists()) {
             badgeFile.delete();
         }
+    }
+
+    public void modifyBadge(
+            BadgeInformation badgeInformation) {
+
+        addBadge(badgeInformation);
     }
 
     public ArrayList<String> listBadgeNames() {
@@ -81,19 +164,138 @@ public class Database {
         );
     }
 
-    public void modifyBadge(
-        BadgeInformation badgeInformation) {
 
-        addBadge(badgeInformation);
+    private String getBadgeFileName(String name) {
+        return Paths.get(this.badgesDirectory, name + ".json").toString();
     }
+
+
+    /*
+      Journeys
+     */
+    public void addJourney(JourneyInformation journeyInformation) {
+
+        if (journeyInformation.getName() == null) {
+            //throw exception
+        }
+
+        writeObject(
+                journeyInformation,
+                getJourneyFileName(journeyInformation.getName())
+        );
+    }
+
+    public void removeJourney(String name) {
+        String journeyFileName = getJourneyFileName(name);
+        File journeyFile = new File(journeyFileName);
+        if (journeyFile.exists()) {
+            journeyFile.delete();
+        }
+    }
+
+    public void modifyJourney(JourneyInformation journeyInformation) {
+
+        addJourney(journeyInformation);
+    }
+
+    public ArrayList<String> listJourneyNames() {
+
+        ArrayList<String> journeyNames = new ArrayList<>();
+        File journeyDirectory = new File(this.journeysDirectory);
+        String[] files = journeyDirectory.list();
+
+        if (files != null) {
+            for (String fileName : files) {
+                if (fileName.endsWith(".json")) {
+                    fileName = fileName.substring(0, fileName.length() - 5);
+                    journeyNames.add(fileName);
+                }
+            }
+        }
+
+        return journeyNames;
+    }
+
+    public JourneyInformation getJourney(
+            String name) {
+
+        return (JourneyInformation) readObject(
+                getJourneyFileName(name),
+                JourneyInformation.class
+        );
+    }
+
+    private String getJourneyFileName(String name) {
+        return Paths.get(this.journeysDirectory, name + ".json").toString();
+    }
+
+
+
+    /*
+      Events
+     */
+    public void addEvent(EventInformation eventInformation) {
+
+        if (eventInformation.getName() == null) {
+            //throw exception
+        }
+
+        writeObject(
+                eventInformation,
+                getEventFileName(eventInformation.getName())
+        );
+    }
+
+    public void removeEvent(String name) {
+        String eventFileName = getEventFileName(name);
+        File eventFile = new File(eventFileName);
+        if (eventFile.exists()) {
+            eventFile.delete();
+        }
+    }
+
+    public void modifyEvent(EventInformation eventInformation) {
+
+        addEvent(eventInformation);
+    }
+
+    public ArrayList<String> listEventNames() {
+
+        ArrayList<String> eventNames = new ArrayList<>();
+        File eventDirectory = new File(this.eventsDirectory);
+        String[] files = eventDirectory.list();
+
+        if (files != null) {
+            for (String fileName : files) {
+                if (fileName.endsWith(".json")) {
+                    fileName = fileName.substring(0, fileName.length() - 5);
+                    eventNames.add(fileName);
+                }
+            }
+        }
+
+        return eventNames;
+    }
+
+    public EventInformation getEvent(
+            String name) {
+
+        return (EventInformation) readObject(
+                getEventFileName(name),
+                EventInformation.class
+        );
+    }
+
+    private String getEventFileName(String name) {
+        return Paths.get(this.eventsDirectory, name + ".json").toString();
+    }
+
+
+
 
     private void EnsureDirectory(String directory) {
         File f = new File(directory);
         f.mkdirs();
-    }
-
-    private String getBadgeFileName(String name) {
-        return Paths.get(this.badgesDirectory, name + ".json").toString();
     }
 
     private void writeObject(
