@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class MemberInformation {
 
     private String name;
-    private String age;
-    private String grade;
+    private int age;
+    private int grade;
     private String email;
     private String parentName;
     private String parentEmail;
@@ -26,19 +26,19 @@ public class MemberInformation {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public String getGrade() {
+    public int getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(int grade) {
         this.grade = grade;
     }
 
@@ -72,5 +72,16 @@ public class MemberInformation {
 
     public ArrayList<JourneyProgress> getJourneyProgress() {
         return journeyProgress;
+    }
+
+    void validate()
+        throws IllegalArgumentException {
+
+        Argument.ensureNotNullOrEmpty("MemberInformation.Name", this.name);
+
+        Argument.ensureNotNull("MemberInformation.BadgeProgress", this.badgeProgress);
+        for(BadgeProgress b : this.badgeProgress) {
+            b.validate();
+        }
     }
 }

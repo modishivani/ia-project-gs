@@ -6,7 +6,6 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -44,22 +43,20 @@ public class Database {
     /*
        Members
     */
-    public void addMember(
-            MemberInformation memberInformation) {
+    public void addMember(MemberInformation memberInformation)
+        throws DatabaseException {
+        Argument.ensureNotNull("memberInformation", memberInformation);
+        memberInformation.validate();
 
-        if (memberInformation.getName() == null) {
-            //throw exception
-        }
-
-
-        writeObject(
-                memberInformation,
-                getMemberFileName(memberInformation.getName())
+        this.writeObject(
+            memberInformation,
+            getMemberFileName(memberInformation.getName())
         );
     }
 
-    public void removeMember(
-            String name) {
+    public void removeMember(String name) {
+        Argument.ensureNotNull("name", name);
+
         String memberFileName = getMemberFileName(name);
         File memberFile = new File(memberFileName);
         if (memberFile.exists()) {
@@ -67,7 +64,7 @@ public class Database {
         }
     }
 
-    public void modifyMember(MemberInformation memberInformation) {
+    public void modifyMember(MemberInformation memberInformation) throws DatabaseException {
 
         addMember(memberInformation);
     }
@@ -90,8 +87,9 @@ public class Database {
         return memberNames;
     }
 
-    public MemberInformation getMember(
-            String name) {
+    public MemberInformation getMember(String name)
+        throws DatabaseException{
+        Argument.ensureNotNull("name", name);
 
         return (MemberInformation) readObject(
                 getMemberFileName(name),
@@ -109,7 +107,7 @@ public class Database {
       Badges
      */
     public void addBadge(
-        BadgeInformation badgeInformation) {
+        BadgeInformation badgeInformation) throws DatabaseException {
 
         if (badgeInformation.getName() == null) {
             //throw exception
@@ -132,7 +130,7 @@ public class Database {
     }
 
     public void modifyBadge(
-            BadgeInformation badgeInformation) {
+            BadgeInformation badgeInformation) throws DatabaseException {
 
         addBadge(badgeInformation);
     }
@@ -156,7 +154,8 @@ public class Database {
     }
 
     public BadgeInformation getBadge(
-        String name) {
+        String name)
+        throws DatabaseException {
 
         return (BadgeInformation) readObject(
             getBadgeFileName(name),
@@ -173,7 +172,7 @@ public class Database {
     /*
       Journeys
      */
-    public void addJourney(JourneyInformation journeyInformation) {
+    public void addJourney(JourneyInformation journeyInformation) throws DatabaseException {
 
         if (journeyInformation.getName() == null) {
             //throw exception
@@ -193,7 +192,7 @@ public class Database {
         }
     }
 
-    public void modifyJourney(JourneyInformation journeyInformation) {
+    public void modifyJourney(JourneyInformation journeyInformation) throws DatabaseException {
 
         addJourney(journeyInformation);
     }
@@ -217,7 +216,8 @@ public class Database {
     }
 
     public JourneyInformation getJourney(
-            String name) {
+            String name)
+            throws DatabaseException {
 
         return (JourneyInformation) readObject(
                 getJourneyFileName(name),
@@ -234,7 +234,7 @@ public class Database {
     /*
       Events
      */
-    public void addEvent(EventInformation eventInformation) {
+    public void addEvent(EventInformation eventInformation) throws DatabaseException {
 
         if (eventInformation.getName() == null) {
             //throw exception
@@ -254,7 +254,7 @@ public class Database {
         }
     }
 
-    public void modifyEvent(EventInformation eventInformation) {
+    public void modifyEvent(EventInformation eventInformation) throws DatabaseException {
 
         addEvent(eventInformation);
     }
@@ -277,8 +277,8 @@ public class Database {
         return eventNames;
     }
 
-    public EventInformation getEvent(
-            String name) {
+    public EventInformation getEvent(String name)
+    throws DatabaseException{
 
         return (EventInformation) readObject(
                 getEventFileName(name),
@@ -290,9 +290,6 @@ public class Database {
         return Paths.get(this.eventsDirectory, name + ".json").toString();
     }
 
-
-
-
     private void EnsureDirectory(String directory) {
         File f = new File(directory);
         f.mkdirs();
@@ -300,29 +297,34 @@ public class Database {
 
     private void writeObject(
         Object src,
-        String fileName) {
+        String fileName)
+        throws DatabaseException {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(fileName)) {
             writer.write(gson.toJson(src));
         } catch (IOException e) {
             e.printStackTrace();
+            throw new DatabaseException(
+                "Failed to save item in the database. FileName = " + fileName, e);
         }
     }
 
     private Object readObject(
         String fileName,
         Type objectType)
-    {
+        throws DatabaseException {
         Gson gson = new Gson();
         try {
             JsonReader reader = new JsonReader(new FileReader(fileName));
             return gson.fromJson(reader, objectType);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            throw new DatabaseException(
+                "Failed to read item from the database. FileName = " + fileName, e);
         }
-
-        return null;
     }
+
+
 
 }

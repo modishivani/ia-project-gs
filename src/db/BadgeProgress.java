@@ -23,4 +23,7 @@ public class BadgeProgress {
     public StepProgress[] getStepProgress() {
         return this.stepProgress;
     }
+
+    void validate() {
+    }
 }
