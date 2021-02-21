@@ -20,6 +20,10 @@ public class Database {
     private final String journeysDirectory;
     private final String eventsDirectory;
 
+    public Database() {
+        this("42162", "2020-2021");
+    }
+
     public Database(
         String troopNo,
         String year) {
@@ -40,6 +44,15 @@ public class Database {
         this.eventsDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "events").toString();
         EnsureDirectory(this.eventsDirectory);
     }
+
+    public String getTroopNo() {
+        return this.troopNo;
+    }
+
+    public String getYear() {
+        return this.year;
+    }
+
     /*
        Members
     */

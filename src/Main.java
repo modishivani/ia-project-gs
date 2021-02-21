@@ -1,9 +1,7 @@
 import com.formdev.flatlaf.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import db.BadgeInformation;
-import db.Database;
-import db.MemberInformation;
+import db.*;
 import ui.MainFrame;
 import ui.SettingsPanel;
 import ui.components.LargeIconButton;
@@ -22,7 +20,7 @@ public class Main {
     static final int PANEL_WIDTH = 800;
     static final int PANEL_HEIGHT = 800;
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws DatabaseException {
 
         /*
         MemberInformation m = new MemberInformation();
@@ -38,7 +36,7 @@ public class Main {
             e.printStackTrace();
         }
 
-         */
+
         Database db = new Database(
                 "42162",
                 "2020-2021");
@@ -72,8 +70,8 @@ public class Main {
         //db.removeBadge(badgeInformation.getName());
         //System.out.println(db.getBadgeFilePath("Shivani Modi"));
 
+ */
 
-        /*
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch( Exception ex ) {
@@ -82,7 +80,7 @@ public class Main {
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.setVisible(true);
-         */
+
     }
 
 

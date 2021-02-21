@@ -1,5 +1,7 @@
 package ui;
 
+import db.Database;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,12 +13,20 @@ public class MainFrame extends JFrame {
 
     private JPanel framePanel;
     private CardLayout framePanelLayout;
+    private Database db;
+    private BadgeProgressPanel badgeProgressPanel;
+    private JourneyProgressPanel journeyProgressPanel;
+    private MemberInfoPanel memberInfoPanel;
+    private SettingsPanel settingsPanel;
+    private EventsPanel eventsPanel;
 
     public MainFrame() {
         super();
 
+        this.db = new Database();
+        
         this.setSize(WIDTH, HEIGHT);
-        this.setTitle("Girl Scout Troop");
+        this.setTitle("Girl Scout Troop " + this.db.getTroopNo());
 
         // create frame panel
         this.framePanel = new JPanel();
@@ -25,11 +35,11 @@ public class MainFrame extends JFrame {
 
         // create and add main panels to the frame panel
         HomePanel homePanel = new HomePanel(this);
-        BadgeProgressPanel badgeProgressPanel = new BadgeProgressPanel(this);
-        JourneyProgressPanel journeyProgressPanel = new JourneyProgressPanel(this);
-        MemberInfoPanel memberInfoPanel = new MemberInfoPanel(this);
-        SettingsPanel settingsPanel = new SettingsPanel(this);
-        EventsPanel eventsPanel = new EventsPanel(this);
+        this.badgeProgressPanel = new BadgeProgressPanel(this);
+        this.journeyProgressPanel = new JourneyProgressPanel(this);
+        this.memberInfoPanel = new MemberInfoPanel(this);
+        this.settingsPanel = new SettingsPanel(this);
+        this.eventsPanel = new EventsPanel(this);
 
         this.framePanel.add(homePanel, PanelNames.HOME);
         this.framePanel.add(badgeProgressPanel, PanelNames.BADGE_PROGRESS);
@@ -49,9 +59,21 @@ public class MainFrame extends JFrame {
 
     public void setMainPanel(String name) {
 
-        this.framePanelLayout.show(this.framePanel, name);
+
+        switch(name) {
+            case PanelNames.MEMBER_INFO:
+                if (this.memberInfoPanel.tryLoadData()) {
+                    this.framePanelLayout.show(this.framePanel, name);
+                }
+                break;
+            default:
+                this.framePanelLayout.show(this.framePanel, name);
+        }
+
+
     }
 
-
-
+    Database getDb() {
+        return this.db;
+    }
 }
