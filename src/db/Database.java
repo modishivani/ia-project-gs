@@ -56,7 +56,7 @@ public class Database {
     /*
        Members
     */
-    public void addMember(MemberInformation memberInformation)
+    public void addOrModifyMember(MemberInformation memberInformation)
         throws DatabaseException {
         Argument.ensureNotNull("memberInformation", memberInformation);
         memberInformation.validate();
@@ -75,11 +75,6 @@ public class Database {
         if (memberFile.exists()) {
             memberFile.delete();
         }
-    }
-
-    public void modifyMember(MemberInformation memberInformation) throws DatabaseException {
-
-        addMember(memberInformation);
     }
 
     public ArrayList<String> listMemberNames() {
@@ -328,16 +323,26 @@ public class Database {
         Type objectType)
         throws DatabaseException {
         Gson gson = new Gson();
+        FileReader fileReader = null;
+        JsonReader jsonReader = null;
+        Object retValue;
         try {
-            JsonReader reader = new JsonReader(new FileReader(fileName));
-            return gson.fromJson(reader, objectType);
+            fileReader =  new FileReader(fileName);
+            jsonReader = new JsonReader(fileReader);
+
+            retValue = gson.fromJson(jsonReader, objectType);
+            return retValue;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new DatabaseException(
                 "Failed to read item from the database. FileName = " + fileName, e);
+        } finally {
+            if (jsonReader != null) {
+                try { jsonReader.close(); } catch(Exception e) {}
+            }
+            if (fileReader != null) {
+                try { fileReader.close(); } catch(Exception e) {}
+            }
         }
     }
-
-
-
 }

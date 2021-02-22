@@ -1,21 +1,13 @@
 package ui;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import db.DatabaseException;
 import db.MemberInformation;
-import ui.components.IconCaptionButton;
 import ui.components.LabelTextField;
 import ui.components.TopInfoPanel;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MemberInfoPanel extends JPanel {
@@ -25,13 +17,17 @@ public class MemberInfoPanel extends JPanel {
 
     private JList<String> memberList;
 
-    private LabelTextField nameField = new LabelTextField("Name : ");
-    private LabelTextField ageField = new LabelTextField("Age : ");
-    private LabelTextField gradeField = new LabelTextField("Grade : ");
-    private LabelTextField emailField = new LabelTextField("Email : ");
-    private LabelTextField parentNameField = new LabelTextField("Parent Name : ");
-    private LabelTextField parentEmailField = new LabelTextField("Parent Email : ");
+    private final LabelTextField nameField = new LabelTextField("Name : ");
+    private final LabelTextField ageField = new LabelTextField("Age : ");
+    private final LabelTextField gradeField = new LabelTextField("Grade : ");
+    private final LabelTextField emailField = new LabelTextField("Email : ");
+    private final LabelTextField parentNameField = new LabelTextField("Parent Name : ");
+    private final LabelTextField parentEmailField = new LabelTextField("Parent Email : ");
 
+    JButton addMemberButton = new JButton(" Add Member ");
+    JButton editMemberButton = new JButton(" Edit Member ");
+    JButton saveMemberButton = new JButton(" Save Member ");
+    JButton deleteMemberButton = new JButton(" Delete Member ");
 
     public MemberInfoPanel(MainFrame mainFrame) {
         super();
@@ -48,14 +44,6 @@ public class MemberInfoPanel extends JPanel {
     private JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
 
-        /*
-        JSplitPane splitPane = new JSplitPane();
-        splitPane.setDividerLocation(30);
-        splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane.setLeftComponent(createMemberListPanel());
-        splitPane.setRightComponent(createMemberDetailsPanel());
-        splitPane.sete
-*/
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(createMemberListPanel(), BorderLayout.WEST);
         centerPanel.add(createMemberDetailsPanel(), BorderLayout.CENTER);
@@ -71,12 +59,7 @@ public class MemberInfoPanel extends JPanel {
         this.memberList = new JList<>(this.memberNamesListModel);
         this.memberList.setFixedCellHeight(25);
         this.memberList.setOpaque(false);
-        this.memberList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                loadMemberDetails(memberList.getSelectedValue());
-            }
-        });
+        this.memberList.addListSelectionListener(e -> showMember(memberList.getSelectedValue()));
 
         memberListPanel.setLayout(new BorderLayout());
         memberListPanel.add(memberList, BorderLayout.CENTER);
@@ -92,42 +75,6 @@ public class MemberInfoPanel extends JPanel {
         return memberListPanel;
     }
 
-    private void loadMemberDetails(String selectedValue) {
-        try {
-
-            if (selectedValue != null) {
-                MemberInformation memberInformation = this.mainFrame.getDb().getMember(selectedValue);
-                this.nameField.setText(memberInformation.getName());
-                this.nameField.setEditable(false);
-
-                if (memberInformation.getAge() != 0) {
-                    this.ageField.setText(Integer.toString(memberInformation.getAge()));
-                } else {
-                    this.ageField.setText("");
-                }
-                this.ageField.setEditable(false);
-
-                if (memberInformation.getGrade() != 0) {
-                    this.gradeField.setText(Integer.toString(memberInformation.getGrade()));
-                } else {
-                    this.gradeField.setText("");
-                }
-                this.gradeField.setEditable(false);
-
-                this.emailField.setText(memberInformation.getEmail());
-                this.emailField.setEditable(false);
-
-                this.parentNameField.setText(memberInformation.getParentName());
-                this.parentNameField.setEditable(false);
-
-                this.parentEmailField.setText(memberInformation.getParentEmail());
-                this.parentEmailField.setEditable(false);
-            }
-
-        } catch (DatabaseException e) {
-            System.out.println(e);
-        }
-    }
 
     private JPanel createMemberDetailsPanel() {
         JPanel memberDetailsPanel = new JPanel();
@@ -161,19 +108,14 @@ public class MemberInfoPanel extends JPanel {
 
     private JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
-        JButton addMemberButton = new JButton(" Add Member ");
+
         addMemberButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    addMember();
-                } catch (DatabaseException databaseException) {
-                    databaseException.printStackTrace();
-                }
+                addMember();
             }
         });
 
-        JButton editMemberButton = new JButton(" Edit Member ");
         editMemberButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -181,7 +123,6 @@ public class MemberInfoPanel extends JPanel {
             }
         });
 
-        JButton saveMemberButton = new JButton(" Save Member ");
         saveMemberButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -193,7 +134,6 @@ public class MemberInfoPanel extends JPanel {
             }
         });
 
-        JButton deleteMemberButton = new JButton(" Delete Member ");
         deleteMemberButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -207,36 +147,53 @@ public class MemberInfoPanel extends JPanel {
         return buttonsPanel;
     }
 
-    private void addMember() throws DatabaseException {
-        this.nameField.setEditable(true);
-        this.ageField.setEditable(true);
-        this.gradeField.setEditable(true);
-        this.emailField.setEditable(true);
-        this.parentNameField.setEditable(true);
-        this.parentEmailField.setEditable(true);
-        /*MemberInformation tempMemberInformation = new MemberInformation();
-        tempMemberInformation.setName("  ");
-        this.mainFrame.getDb().addMember(tempMemberInformation);
-        createMemberListPanel();*/
+    private void showMember(String selectedValue) {
+        try {
+
+            if (selectedValue != null) {
+                MemberInformation memberInformation = this.mainFrame.getDb().getMember(selectedValue);
+                this.nameField.setText(memberInformation.getName());
+
+                if (memberInformation.getAge() != 0) {
+                    this.ageField.setText(Integer.toString(memberInformation.getAge()));
+                } else {
+                    this.ageField.setText("");
+                }
+
+                if (memberInformation.getGrade() != 0) {
+                    this.gradeField.setText(Integer.toString(memberInformation.getGrade()));
+                } else {
+                    this.gradeField.setText("");
+                }
+
+                this.emailField.setText(memberInformation.getEmail());
+                this.parentNameField.setText(memberInformation.getParentName());
+                this.parentEmailField.setText(memberInformation.getParentEmail());
+
+                this.setMemberDetailEditable(false, false);
+            }
+
+        } catch (DatabaseException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    private void addMember() {
+        this.setMemberDetailEditable(true, true);
+
+        ListSelectionModel sm = memberList.getSelectionModel();
+        sm.clearSelection();
     }
 
     private void editMember() {
-        this.nameField.setEditable(false);
-        this.ageField.setEditable(true);
-        this.gradeField.setEditable(true);
-        this.emailField.setEditable(true);
-        this.parentNameField.setEditable(true);
-        this.parentEmailField.setEditable(true);
+        this.setMemberDetailEditable(true, false);
+
     }
 
     private void saveMember() throws DatabaseException {
-        MemberInformation memberInformation = this.mainFrame.getDb().getMember(this.nameField.getText());
 
-       /* MemberInformation tempMemberInformation = new MemberInformation();
-        tempMemberInformation.setName(this.nameField.getText());
-        this.mainFrame.getDb().addMember(tempMemberInformation);
-        createMemberListPanel();*/
-
+        MemberInformation memberInformation = new MemberInformation();
+        memberInformation.setName(this.nameField.getText());
         if (!this.ageField.getText().equals("")) {
             memberInformation.setAge(Integer.parseInt(this.ageField.getText()));
         }
@@ -247,37 +204,92 @@ public class MemberInfoPanel extends JPanel {
         memberInformation.setParentName(this.parentNameField.getText());
         memberInformation.setParentEmail(this.parentEmailField.getText());
 
-        this.mainFrame.getDb().addMember(memberInformation);
+        this.mainFrame.getDb().addOrModifyMember(memberInformation);
 
-        this.nameField.setEditable(false);
-        this.ageField.setEditable(false);
-        this.gradeField.setEditable(false);
-        this.emailField.setEditable(false);
-        this.parentNameField.setEditable(false);
-        this.parentEmailField.setEditable(false);
+        if (!this.memberNamesListModel.contains(memberInformation.getName())) {
+            int index = this.memberNamesListModel.size();
+            this.memberNamesListModel.add(
+                    index,
+                    memberInformation.getName());
+
+            ListSelectionModel sm = memberList.getSelectionModel();
+            sm.clearSelection();
+            sm.setSelectionInterval(index, index);
+        }
+
+        this.setMemberDetailEditable(false, false);
     }
 
     private void deleteMember() {
+
         String selectedValue = memberList.getSelectedValue();
-        this.mainFrame.getDb().removeMember(selectedValue);
+        int input = JOptionPane.showConfirmDialog(  //yes = 0, no = 1
+                this.mainFrame,
+                "Are you sure you want to delete " + selectedValue + " ?",
+                "",
+                 JOptionPane.YES_NO_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE);
+        if (input == 0) {
+            this.mainFrame.getDb().removeMember(selectedValue);
+
+            int selectedIndex = memberList.getSelectedIndex();
+            this.memberNamesListModel.remove(selectedIndex);
+
+            if (selectedIndex != 0) {
+                selectedIndex--;
+            }
+
+            ListSelectionModel sm = memberList.getSelectionModel();
+            sm.clearSelection();
+            sm.setSelectionInterval(selectedIndex, selectedIndex);
+        }
     }
 
-    boolean tryLoadData() {
+    private void setMemberDetailEditable(boolean editable, boolean nameFieldEditable) {
+        this.nameField.setEditable(nameFieldEditable);
+        this.ageField.setEditable(editable);
+        this.gradeField.setEditable(editable);
+        this.emailField.setEditable(editable);
+        this.parentNameField.setEditable(editable);
+        this.parentEmailField.setEditable(editable);
 
-        try {
-            loadData();
-
-            return true;
-        } catch (DatabaseException db) {
-
-            //MessageBox.
-            return false;
+        if (nameFieldEditable) {
+            this.nameField.setText("");
+            this.ageField.setText("");
+            this.gradeField.setText("");
+            this.emailField.setText("");
+            this.parentNameField.setText("");
+            this.parentEmailField.setText("");
         }
 
+        if (!editable && !nameFieldEditable) {
+            this.addMemberButton.setEnabled(true);
+            this.deleteMemberButton.setEnabled(true);
+            this.editMemberButton.setEnabled(true);
+            this.saveMemberButton.setEnabled(false);
+        }
+
+        if (editable && !nameFieldEditable) {
+            this.addMemberButton.setEnabled(true);
+            this.deleteMemberButton.setEnabled(true);
+            this.editMemberButton.setEnabled(false);
+            this.saveMemberButton.setEnabled(true);
+        }
+
+        if (editable && nameFieldEditable) {
+            this.addMemberButton.setEnabled(false);
+            this.deleteMemberButton.setEnabled(false);
+            this.editMemberButton.setEnabled(false);
+            this.saveMemberButton.setEnabled(true);
+        }
     }
 
-    void loadData()
-        throws DatabaseException {
+    public boolean tryLoadData() {
+        this.loadData();
+        return true;
+    }
+
+    void loadData() {
 
         ArrayList<String> memberNames = this.mainFrame.getDb().listMemberNames();
 
@@ -288,6 +300,5 @@ public class MemberInfoPanel extends JPanel {
         if (!this.memberNamesListModel.isEmpty()) {
             this.memberList.setSelectedIndex(0);
         }
-
     }
 }
