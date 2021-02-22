@@ -1,5 +1,6 @@
 package db;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 
 public class MemberInformation {
@@ -75,13 +76,21 @@ public class MemberInformation {
     }
 
     void validate()
-        throws IllegalArgumentException {
+            throws IllegalArgumentException {
 
-        Argument.ensureNotNullOrEmpty("MemberInformation.Name", this.name);
-
-        Argument.ensureNotNull("MemberInformation.BadgeProgress", this.badgeProgress);
-        for(BadgeProgress b : this.badgeProgress) {
+        Argument.ensureNotNullOrEmpty("member name", this.name);
+        Argument.ensureInRange("member age", this.age, 0, 18);
+        Argument.ensureInRange("member grade", this.grade, 0, 12);
+        Argument.ensureContains("member email", this.email, "@");
+        Argument.ensureContains("parent email", this.parentEmail, "@");
+        Argument.ensureNotNull("member badge progress", this.badgeProgress);
+        for (BadgeProgress b : this.badgeProgress) {
             b.validate();
+        }
+        Argument.ensureNotNull("member journey progress", this.journeyProgress);
+        for (JourneyProgress j : this.journeyProgress) {
+            j.validate();
         }
     }
 }
+

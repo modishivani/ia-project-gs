@@ -19,4 +19,11 @@ class Argument {
             throw new IllegalArgumentException("The " + argumentName + " must be between " + lowerBound + " and " + upperBound + ".");
         }
     }
+
+    static void ensureContains(String argumentName, String argument, String substring) {
+        if (argument != null && !argument.contains(substring)) {
+            throw new IllegalArgumentException("The " + argumentName + " must contain " + substring + " .");
+        }
+    }
+
 }

@@ -23,5 +23,12 @@ public class JourneyProgress {
     public StepProgress[] getStepProgress() {
         return this.stepProgress;
     }
+
+    void validate() {
+        Argument.ensureNotNull("JourneyProgress.stepProgress", this.stepProgress);
+        for(StepProgress s : this.stepProgress) {
+            s.validate();
+        }
+    }
 }
 

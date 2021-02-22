@@ -204,20 +204,29 @@ public class MemberInfoPanel extends JPanel {
         memberInformation.setParentName(this.parentNameField.getText());
         memberInformation.setParentEmail(this.parentEmailField.getText());
 
-        this.mainFrame.getDb().addOrModifyMember(memberInformation);
+        try {
+            this.mainFrame.getDb().addOrModifyMember(memberInformation);
+            if (!this.memberNamesListModel.contains(memberInformation.getName())) {
+                int index = this.memberNamesListModel.size();
+                this.memberNamesListModel.add(
+                        index,
+                        memberInformation.getName());
 
-        if (!this.memberNamesListModel.contains(memberInformation.getName())) {
-            int index = this.memberNamesListModel.size();
-            this.memberNamesListModel.add(
-                    index,
-                    memberInformation.getName());
+                ListSelectionModel sm = memberList.getSelectionModel();
+                sm.clearSelection();
+                sm.setSelectionInterval(index, index);
+            }
+            this.setMemberDetailEditable(false, false);
 
-            ListSelectionModel sm = memberList.getSelectionModel();
-            sm.clearSelection();
-            sm.setSelectionInterval(index, index);
+        } catch (Exception e){
+            int input = JOptionPane.showConfirmDialog(
+                    this.mainFrame,
+                    e.getMessage(),
+                    "Error",
+                    JOptionPane.CLOSED_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
         }
 
-        this.setMemberDetailEditable(false, false);
     }
 
     private void deleteMember() {

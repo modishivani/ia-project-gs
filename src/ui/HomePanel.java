@@ -21,6 +21,7 @@ public class HomePanel extends JPanel {
 
         //// create components
         JPanel titlePanel = new JPanel();
+        titlePanel.setOpaque(false);
         titlePanel.setLayout(new BorderLayout());
 
         JLabel titleText = new JLabel("Girl Scout Troop 42162");
@@ -37,11 +38,12 @@ public class HomePanel extends JPanel {
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(createButtonPanel(), BorderLayout.CENTER);
 
-        //// add action listeners
+        this.setBackground(new Color(233,246,220));
     }
 
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new FlowLayout());
 
         LargeIconButton membersButton = new LargeIconButton(

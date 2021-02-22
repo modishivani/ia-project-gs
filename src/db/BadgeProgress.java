@@ -25,5 +25,9 @@ public class BadgeProgress {
     }
 
     void validate() {
+        Argument.ensureNotNull("BadgeProgress.stepProgress", this.stepProgress);
+        for(StepProgress s : this.stepProgress) {
+            s.validate();
+        }
     }
 }

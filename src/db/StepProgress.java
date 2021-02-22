@@ -16,4 +16,8 @@ public class StepProgress {
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
+
+    void validate() {
+        Argument.ensureNotNull("step name", this.name);
+    }
 }
