@@ -6,6 +6,7 @@ import ui.components.LabelTextField;
 import ui.components.TopInfoPanel;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -38,12 +39,14 @@ public class MemberInfoPanel extends JPanel {
     }
 
     private JPanel createTopPanel() {
-        return new TopInfoPanel(this.mainFrame, "   Member Information");
+        JPanel topPanel = new TopInfoPanel(this.mainFrame, " Member Information");
+        topPanel.setBackground(new Color(233,246,220));
+        return topPanel;
     }
 
     private JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
-
+        centerPanel.setBackground(new Color(247,252,242));
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(createMemberListPanel(), BorderLayout.WEST);
         centerPanel.add(createMemberDetailsPanel(), BorderLayout.CENTER);
@@ -64,11 +67,13 @@ public class MemberInfoPanel extends JPanel {
         memberListPanel.setLayout(new BorderLayout());
         memberListPanel.add(memberList, BorderLayout.CENTER);
         memberListPanel.setPreferredSize(new Dimension(200, 0));
+        TitledBorder titledBorder = new TitledBorder(" Names ");
+        titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
         memberListPanel.setBorder(
             BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(5, 5, 10, 5),
                 BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(" Names "),
+                        titledBorder,
                         BorderFactory.createEmptyBorder(20, 20, 20, 20))));
 
         memberListPanel.setOpaque(false);
@@ -78,14 +83,17 @@ public class MemberInfoPanel extends JPanel {
 
     private JPanel createMemberDetailsPanel() {
         JPanel memberDetailsPanel = new JPanel();
+        memberDetailsPanel.setOpaque(false);
         memberDetailsPanel.setLayout(new BorderLayout());
         memberDetailsPanel.add(createMemberFieldsPanel(), BorderLayout.NORTH);
         memberDetailsPanel.add(createButtonsPanel(), BorderLayout.SOUTH);
+        TitledBorder titledBorder = new TitledBorder(" Information ");
+        titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
         memberDetailsPanel.setBorder(
             BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(5, 5, 10, 5),
                 BorderFactory.createCompoundBorder(
-                    BorderFactory.createTitledBorder(" Information "),
+                    titledBorder,
                     BorderFactory.createEmptyBorder(20, 20, 20, 20))));
 
         return memberDetailsPanel;
@@ -93,6 +101,7 @@ public class MemberInfoPanel extends JPanel {
 
     private JPanel createMemberFieldsPanel() {
         JPanel memberFieldsPanel = new JPanel();
+        memberFieldsPanel.setOpaque(false);
         GridLayout gridLayout = new GridLayout(6, 0, 10, 5);
         memberFieldsPanel.setLayout(gridLayout);
 
@@ -108,7 +117,7 @@ public class MemberInfoPanel extends JPanel {
 
     private JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
-
+        buttonsPanel.setOpaque(false);
         addMemberButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -20,7 +20,7 @@ public class LabelTextField extends JPanel{
         labelField.setBorder(new EmptyBorder(5,5,5,5));
 
         this.textField = new JTextField();
-
+        this.setOpaque(false);
 
         this.setLayout(new BorderLayout());
         this.add(labelField, BorderLayout.WEST);
