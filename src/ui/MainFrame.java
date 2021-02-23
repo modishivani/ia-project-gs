@@ -66,6 +66,10 @@ public class MainFrame extends JFrame {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
                 break;
+            case PanelNames.BADGE_PROGRESS:
+                if (this.badgeProgressPanel.tryLoadData()) {
+                    this.framePanelLayout.show(this.framePanel, name);
+                }
             default:
                 this.framePanelLayout.show(this.framePanel, name);
         }

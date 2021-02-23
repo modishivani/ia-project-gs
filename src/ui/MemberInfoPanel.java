@@ -30,6 +30,8 @@ public class MemberInfoPanel extends JPanel {
     JButton saveMemberButton = new JButton(" Save Member ");
     JButton deleteMemberButton = new JButton(" Delete Member ");
 
+    private MemberInformation selectedMemberInformation;
+
     public MemberInfoPanel(MainFrame mainFrame) {
         super();
         this.mainFrame = mainFrame;
@@ -179,7 +181,10 @@ public class MemberInfoPanel extends JPanel {
                 this.parentNameField.setText(memberInformation.getParentName());
                 this.parentEmailField.setText(memberInformation.getParentEmail());
 
+                this.selectedMemberInformation = memberInformation;
                 this.setMemberDetailEditable(false, false);
+            } else {
+                this.selectedMemberInformation = null;
             }
 
         } catch (DatabaseException e) {
@@ -188,6 +193,7 @@ public class MemberInfoPanel extends JPanel {
     }
 
     private void addMember() {
+        this.selectedMemberInformation = null;
         this.setMemberDetailEditable(true, true);
 
         ListSelectionModel sm = memberList.getSelectionModel();
@@ -201,7 +207,13 @@ public class MemberInfoPanel extends JPanel {
 
     private void saveMember() throws DatabaseException {
 
-        MemberInformation memberInformation = new MemberInformation();
+        String memberName = this.nameField.getText();
+
+        MemberInformation memberInformation = this.selectedMemberInformation;
+        if (memberInformation == null) {
+            memberInformation = new MemberInformation();
+        }
+
         memberInformation.setName(this.nameField.getText());
         if (!this.ageField.getText().equals("")) {
             memberInformation.setAge(Integer.parseInt(this.ageField.getText()));
