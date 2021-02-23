@@ -1,0 +1,15 @@
+{
+  "name": "Shivani Modi",
+  "age": 12,
+  "grade": 12,
+  "email": "shivani@live.com",
+  "parentName": "",
+  "parentEmail": "",
+  "badgeProgress": [],
+  "journeyProgress": [
+    {
+      "name": "J1",
+      "stepProgress": []
+    }
+  ]
+}
