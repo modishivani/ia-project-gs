@@ -44,14 +44,17 @@ public class SettingsPanel extends JPanel {
 
         settingsDisplayPanel.add(this.badgeSettingsPanel, "Badges");
         settingsDisplayPanel.add(this.journeySettingsPanel, "Journeys");
+
         settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
         this.badgeSettingsPanel.loadData();
+
 
         this.badgeSettingsButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
             settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
             badgeSettingsPanel.loadData();
+            badgeSettingsButton.requestFocus();
             }
         });
 
@@ -60,6 +63,7 @@ public class SettingsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
             settingsDisplayLayout.show(settingsDisplayPanel, "Journeys");
             journeySettingsPanel.loadData();
+            journeySettingsButton.requestFocus();
             }
         });
 
@@ -73,7 +77,7 @@ public class SettingsPanel extends JPanel {
     private JPanel createBadgeJourneyButtonsPanel() {
         JPanel badgeJourneyButtonsPanel = new JPanel();
         badgeJourneyButtonsPanel.setOpaque(false);
-        badgeJourneyButtonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+        badgeJourneyButtonsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         ImageIcon tmpIcon = new ImageIcon(this.getClass().getResource("/images/badgeIcon.png"));
         Image image = tmpIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);

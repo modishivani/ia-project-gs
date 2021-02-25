@@ -203,7 +203,6 @@ public class MemberInfoPanel extends JPanel {
 
     private void editMember() {
         this.setMemberDetailEditable(true, false);
-
     }
 
     private void saveMember() throws DatabaseException {
@@ -252,7 +251,6 @@ public class MemberInfoPanel extends JPanel {
     }
 
     private void deleteMember() {
-
         String selectedValue = memberList.getSelectedValue();
         int input = JOptionPane.showConfirmDialog(  //yes = 0, no = 1
                 this.mainFrame,

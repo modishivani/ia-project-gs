@@ -110,17 +110,14 @@ public class Database {
         return Paths.get(this.membersDirectory, name + ".json").toString();
     }
 
-
     /*
       Badges
      */
-    public void addBadge(
+    public void addOrModifyBadge(
         BadgeInformation badgeInformation) throws DatabaseException {
-
         if (badgeInformation.getName() == null) {
             //throw exception
         }
-
 
         writeObject(
             badgeInformation,
@@ -135,11 +132,6 @@ public class Database {
         if (badgeFile.exists()) {
             badgeFile.delete();
         }
-    }
-
-    public void modifyBadge(BadgeInformation badgeInformation) throws DatabaseException {
-
-        addBadge(badgeInformation);
     }
 
     public ArrayList<String> listBadgeNames() {
@@ -179,7 +171,7 @@ public class Database {
     /*
       Journeys
      */
-    public void addJourney(JourneyInformation journeyInformation) throws DatabaseException {
+    public void addOrModifyJourney(JourneyInformation journeyInformation) throws DatabaseException {
 
         if (journeyInformation.getName() == null) {
             //throw exception
@@ -197,11 +189,6 @@ public class Database {
         if (journeyFile.exists()) {
             journeyFile.delete();
         }
-    }
-
-    public void modifyJourney(JourneyInformation journeyInformation) throws DatabaseException {
-
-        addJourney(journeyInformation);
     }
 
     public ArrayList<String> listJourneyNames() {

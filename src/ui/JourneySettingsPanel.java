@@ -25,8 +25,8 @@ public class JourneySettingsPanel extends ActivitySettingsPanel {
     }
 
     @Override
-    protected void addActivityInformation(ActivityInformation activity) throws DatabaseException {
-        this.mainFrame.getDb().addJourney((JourneyInformation) activity);
+    protected void addOrModifyActivityInformation(ActivityInformation activity) throws DatabaseException {
+        this.mainFrame.getDb().addOrModifyJourney((JourneyInformation) activity);
     }
 
     @Override
@@ -34,9 +34,5 @@ public class JourneySettingsPanel extends ActivitySettingsPanel {
         this.mainFrame.getDb().removeJourney(name);
     }
 
-    @Override
-    protected void modifyActivityInformation(ActivityInformation activity)
-            throws DatabaseException {
-        this.mainFrame.getDb().modifyJourney((JourneyInformation) activity);
-    }
 }
+
