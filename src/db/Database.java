@@ -137,8 +137,7 @@ public class Database {
         }
     }
 
-    public void modifyBadge(
-            BadgeInformation badgeInformation) throws DatabaseException {
+    public void modifyBadge(BadgeInformation badgeInformation) throws DatabaseException {
 
         addBadge(badgeInformation);
     }

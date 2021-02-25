@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class MemberInfoPanel extends JPanel {
 
     private final MainFrame mainFrame;
-    private DefaultListModel<String> memberNamesListModel;
 
+    private DefaultListModel<String> memberNamesListModel;
     private JList<String> memberList;
 
     private final LabelTextField nameField = new LabelTextField("Name : ");
@@ -188,6 +188,7 @@ public class MemberInfoPanel extends JPanel {
             }
 
         } catch (DatabaseException e) {
+            // TODO: replace with message box
             System.out.println(e.toString());
         }
     }

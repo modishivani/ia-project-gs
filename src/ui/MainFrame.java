@@ -70,6 +70,10 @@ public class MainFrame extends JFrame {
                 if (this.badgeProgressPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
+            case PanelNames.SETTINGS:
+                if (this.settingsPanel.tryLoadData()) {
+                    this.framePanelLayout.show(this.framePanel, name);
+                }
             default:
                 this.framePanelLayout.show(this.framePanel, name);
         }

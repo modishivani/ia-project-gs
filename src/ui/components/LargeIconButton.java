@@ -85,6 +85,7 @@ public class LargeIconButton extends JButton {
         // title
         JLabel titleLabel = new JLabel(title, JLabel.LEFT);
         titleLabel.setBorder(new EmptyBorder(5,10,0,5));
+        titleLabel.setForeground(new Color(9,95,54));
         titleLabel.setOpaque(false);
         Utility.setBoldFont(titleLabel);
 

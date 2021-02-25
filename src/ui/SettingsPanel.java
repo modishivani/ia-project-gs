@@ -1,23 +1,20 @@
 package ui;
 
-import ui.components.IconCaptionButton;
-import ui.components.IconPanel;
-import ui.components.TopInfoPanel;
+import ui.components.*;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class SettingsPanel extends JPanel {
 
     private final MainFrame mainFrame;
-    private DefaultListModel<String> badgeNamesListModel;
-    private JList<String> badgeList;
-    private DefaultListModel<String> journeyNamesListModel;
-    private JList<String> JourneyList;
+
     JButton badgeSettingsButton = new JButton(" Badge Settings ");
     JButton journeySettingsButton = new JButton(" Journey Settings ");
+
+    private BadgeSettingsPanel badgeSettingsPanel;
+    private JourneySettingsPanel journeySettingsPanel;
 
     public SettingsPanel(MainFrame mainFrame) {
         super();
@@ -36,21 +33,39 @@ public class SettingsPanel extends JPanel {
     private JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(new Color(247,252,242));
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.add(createBadgeJourneyButtonsPanel(), BorderLayout.NORTH);
+
+        JPanel settingsDisplayPanel = new JPanel();
+        settingsDisplayPanel.setOpaque(false);
+        CardLayout settingsDisplayLayout = new CardLayout();
+        settingsDisplayPanel.setLayout(settingsDisplayLayout);
+
+        this.badgeSettingsPanel = new BadgeSettingsPanel(this.mainFrame);
+        this.journeySettingsPanel = new JourneySettingsPanel(this.mainFrame);
+
+        settingsDisplayPanel.add(this.badgeSettingsPanel, "Badges");
+        settingsDisplayPanel.add(this.journeySettingsPanel, "Journeys");
+        settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
+        this.badgeSettingsPanel.loadData();
+
         this.badgeSettingsButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                centerPanel.add(createBadgeSettingsPanel(), BorderLayout.CENTER);
+            settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
+            badgeSettingsPanel.loadData();
             }
         });
 
         this.journeySettingsButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                centerPanel.add(createJourneySettingsPanel(), BorderLayout.CENTER);
+            settingsDisplayLayout.show(settingsDisplayPanel, "Journeys");
+            journeySettingsPanel.loadData();
             }
         });
+
+        centerPanel.setLayout(new BorderLayout());
+        centerPanel.add(createBadgeJourneyButtonsPanel(), BorderLayout.NORTH);
+        centerPanel.add(settingsDisplayPanel, BorderLayout.CENTER);
 
         return centerPanel;
     }
@@ -60,7 +75,7 @@ public class SettingsPanel extends JPanel {
         badgeJourneyButtonsPanel.setOpaque(false);
         badgeJourneyButtonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 
-        /*ImageIcon tmpIcon = new ImageIcon(this.getClass().getResource("/images/badgeIcon.png"));
+        ImageIcon tmpIcon = new ImageIcon(this.getClass().getResource("/images/badgeIcon.png"));
         Image image = tmpIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon badgesIcon = new ImageIcon(image);
 
@@ -69,54 +84,18 @@ public class SettingsPanel extends JPanel {
         ImageIcon journeysIcon = new ImageIcon(image2);
 
         this.badgeSettingsButton.setIcon(badgesIcon);
-        this.badgeSettingsButton.setText("  Badge Settings  ");
-
+        this.badgeSettingsButton.setForeground(new Color(9,95,54));
         this.journeySettingsButton.setIcon(journeysIcon);
-        this.journeySettingsButton.setText("  Journey Settings  ");
-*/
+        this.journeySettingsButton.setForeground(new Color(9,95,54));
+
         badgeJourneyButtonsPanel.add(this.badgeSettingsButton);
         badgeJourneyButtonsPanel.add(this.journeySettingsButton);
 
         return badgeJourneyButtonsPanel;
     }
 
-    private JPanel createBadgeSettingsPanel() {
-        JPanel createBadgeSettingsPanel = new JPanel();
-        createBadgeSettingsPanel.setLayout(new BorderLayout());
-        createBadgeSettingsPanel.setOpaque(false);
-
-        TitledBorder titledBorder = new TitledBorder(" Badge Settings ");
-        titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
-        createBadgeSettingsPanel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createEmptyBorder(5, 5, 10, 5),
-                        BorderFactory.createCompoundBorder(
-                                titledBorder,
-                                BorderFactory.createEmptyBorder(20, 20, 20, 20))));
-        createBadgeSettingsPanel.add(new JLabel("hello"));
-        /*createBadgeSettingsPanel.add(createBadgeList(), BorderLayout.WEST);
-        createBadgeSettingsPanel.add(createBadgeInformationPanel(), BorderLayout.CENTER);*/
-        return createBadgeSettingsPanel;
+    public boolean tryLoadData() {
+        return true;
     }
-
-    private JPanel createJourneySettingsPanel() {
-        JPanel createJourneySettingsPanel = new JPanel();
-        createJourneySettingsPanel.setLayout(new BorderLayout());
-        createJourneySettingsPanel.setOpaque(false);
-
-        TitledBorder titledBorder = new TitledBorder(" Journey Settings ");
-        titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
-        createJourneySettingsPanel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createEmptyBorder(5, 5, 10, 5),
-                        BorderFactory.createCompoundBorder(
-                                titledBorder,
-                                BorderFactory.createEmptyBorder(20, 20, 20, 20))));
-
-        /*createJourneySettingsPanel.add(createJourneyList(), BorderLayout.WEST);
-        createJourneySettingsPanel.add(createJourneyInformationPanel(), BorderLayout.CENTER);*/
-        return createJourneySettingsPanel;
-    }
-
 }
 
