@@ -1,6 +1,6 @@
 package ui.components;
 
-import ui.Utility;
+import ui.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

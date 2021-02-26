@@ -213,7 +213,6 @@ public class MemberInfoPanel extends JPanel {
         if (memberInformation == null) {
             memberInformation = new MemberInformation();
         }
-
         memberInformation.setName(this.nameField.getText());
         if (!this.ageField.getText().equals("")) {
             memberInformation.setAge(Integer.parseInt(this.ageField.getText()));
@@ -238,7 +237,6 @@ public class MemberInfoPanel extends JPanel {
                 sm.setSelectionInterval(index, index);
             }
             this.setMemberDetailEditable(false, false);
-
         } catch (Exception e){
             int input = JOptionPane.showConfirmDialog(
                     this.mainFrame,
@@ -247,7 +245,6 @@ public class MemberInfoPanel extends JPanel {
                     JOptionPane.CLOSED_OPTION,
                     JOptionPane.INFORMATION_MESSAGE);
         }
-
     }
 
     private void deleteMember() {

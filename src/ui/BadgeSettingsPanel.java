@@ -25,7 +25,8 @@ public class BadgeSettingsPanel extends ActivitySettingsPanel {
     }
 
     @Override
-    protected void addOrModifyActivityInformation(ActivityInformation activity) throws DatabaseException {
+    protected void addOrModifyActivityInformation(ActivityInformation activity)
+            throws DatabaseException {
         this.mainFrame.getDb().addOrModifyBadge((BadgeInformation) activity);
     }
 

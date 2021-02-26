@@ -67,7 +67,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
         activityListPanel.setLayout(new BorderLayout());
         activityListPanel.add(activityList, BorderLayout.CENTER);
         activityListPanel.setPreferredSize(new Dimension(200, 0));
-        TitledBorder titledBorder = new TitledBorder(" " + this.activityKind + " Names ");
+        TitledBorder titledBorder = new TitledBorder(" Names ");
         titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 13f));
         activityListPanel.setBorder(
                 BorderFactory.createCompoundBorder(
@@ -171,7 +171,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
 
         ActivityInformation activityInformation = this.selectedActivityInformation;
         if (activityInformation == null) {
-            activityInformation = new ActivityInformation();
+            activityInformation = this.createActivityInformation();
         }
 
         activityInformation.setName(this.activityNameField.getText());
@@ -320,7 +320,9 @@ public abstract class ActivitySettingsPanel extends JPanel {
 
     protected abstract ActivityInformation createActivityInformation();
     protected abstract ArrayList<String> getActivityNames();
-    protected abstract ActivityInformation getActivityInformation(String name) throws DatabaseException;
-    protected abstract void addOrModifyActivityInformation(ActivityInformation activity) throws DatabaseException;
+    protected abstract ActivityInformation getActivityInformation(String name)
+            throws DatabaseException;
+    protected abstract void addOrModifyActivityInformation(ActivityInformation activity)
+            throws DatabaseException;
     protected abstract void removeActivityInformation(String name);
 }

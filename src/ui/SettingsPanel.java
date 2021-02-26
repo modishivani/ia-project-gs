@@ -47,7 +47,8 @@ public class SettingsPanel extends JPanel {
 
         settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
         this.badgeSettingsPanel.loadData();
-
+        badgeSettingsButton.setEnabled(false);
+        journeySettingsButton.setEnabled(true);
 
         this.badgeSettingsButton.addActionListener(new AbstractAction() {
             @Override
@@ -55,6 +56,8 @@ public class SettingsPanel extends JPanel {
             settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
             badgeSettingsPanel.loadData();
             badgeSettingsButton.requestFocus();
+            badgeSettingsButton.setEnabled(false);
+            journeySettingsButton.setEnabled(true);
             }
         });
 
@@ -64,6 +67,8 @@ public class SettingsPanel extends JPanel {
             settingsDisplayLayout.show(settingsDisplayPanel, "Journeys");
             journeySettingsPanel.loadData();
             journeySettingsButton.requestFocus();
+            badgeSettingsButton.setEnabled(true);
+            journeySettingsButton.setEnabled(false);
             }
         });
 
