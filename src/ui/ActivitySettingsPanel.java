@@ -84,7 +84,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
         JPanel activityInformationPanel = new JPanel();
         activityInformationPanel.setOpaque(false);
         TitledBorder titledBorder = new TitledBorder(" Information ");
-        titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
+        titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 13f));
         activityInformationPanel.setBorder(
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createEmptyBorder(2, 5, 2, 5),
@@ -186,7 +186,6 @@ public abstract class ActivitySettingsPanel extends JPanel {
         activityInformation.setSteps(activitySteps);
 
         try {
-            //TODO: fix error when saving a new activity (activity information cannot be cast to badgeinformation)
             this.addOrModifyActivityInformation(activityInformation);
             if (!this.activityListModel.contains(activityInformation.getName())) {
                 int index = this.activityListModel.size();

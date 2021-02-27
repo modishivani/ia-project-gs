@@ -115,9 +115,8 @@ public class Database {
      */
     public void addOrModifyBadge(
         BadgeInformation badgeInformation) throws DatabaseException {
-        if (badgeInformation.getName() == null) {
-            //throw exception
-        }
+
+        // TODO: validate badgeInformation
 
         writeObject(
             badgeInformation,
@@ -173,9 +172,7 @@ public class Database {
      */
     public void addOrModifyJourney(JourneyInformation journeyInformation) throws DatabaseException {
 
-        if (journeyInformation.getName() == null) {
-            //throw exception
-        }
+        // TODO: validate journeyInformation
 
         writeObject(
                 journeyInformation,

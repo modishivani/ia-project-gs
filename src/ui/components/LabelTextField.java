@@ -28,7 +28,6 @@ public class LabelTextField extends JPanel{
 
         this.setBorder(new EmptyBorder(5,5,5,50));
 
-       // this.setPreferredSize(new Dimension(textFieldSize, 0));
     }
 
     public String getText() {

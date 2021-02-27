@@ -1,6 +1,7 @@
 package ui;
 
 import db.Database;
+import db.DatabaseException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class MainFrame extends JFrame {
     private SettingsPanel settingsPanel;
     private EventsPanel eventsPanel;
 
-    public MainFrame() {
+    public MainFrame() throws DatabaseException {
         super();
 
         this.db = new Database();

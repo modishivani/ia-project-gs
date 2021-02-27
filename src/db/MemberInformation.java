@@ -2,6 +2,7 @@ package db;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class MemberInformation {
 
@@ -11,12 +12,12 @@ public class MemberInformation {
     private String email;
     private String parentName;
     private String parentEmail;
-    private ArrayList<BadgeProgress> badgeProgress;
-    private ArrayList<JourneyProgress> journeyProgress;
+    private Hashtable<String, ActivityProgress> badgeProgress;
+    private Hashtable<String, ActivityProgress> journeyProgress;
 
     public MemberInformation() {
-        this.badgeProgress = new ArrayList<>();
-        this.journeyProgress = new ArrayList<>();
+        this.badgeProgress = new Hashtable<String, ActivityProgress>();
+        this.journeyProgress = new Hashtable<String, ActivityProgress>();
     }
 
     public String getName() {
@@ -67,11 +68,11 @@ public class MemberInformation {
         this.parentEmail = parentEmail;
     }
 
-    public ArrayList<BadgeProgress> getBadgeProgress() {
+    public Hashtable<String, ActivityProgress> getBadgeProgress() {
         return badgeProgress;
     }
 
-    public ArrayList<JourneyProgress> getJourneyProgress() {
+    public Hashtable<String, ActivityProgress> getJourneyProgress() {
         return journeyProgress;
     }
 
@@ -84,11 +85,11 @@ public class MemberInformation {
         Argument.ensureContains("member email", this.email, "@");
         Argument.ensureContains("parent email", this.parentEmail, "@");
         Argument.ensureNotNull("member badge progress", this.badgeProgress);
-        for (BadgeProgress b : this.badgeProgress) {
+        for (ActivityProgress b : this.badgeProgress.values()) {
             b.validate();
         }
         Argument.ensureNotNull("member journey progress", this.journeyProgress);
-        for (JourneyProgress j : this.journeyProgress) {
+        for (ActivityProgress j : this.journeyProgress.values()) {
             j.validate();
         }
     }
