@@ -3,6 +3,8 @@ package db;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import db.exceptions.ActivityInUseException;
+import db.exceptions.DatabaseException;
 
 import java.io.*;
 import java.lang.reflect.Type;

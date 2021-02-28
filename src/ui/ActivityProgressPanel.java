@@ -2,12 +2,11 @@ package ui;
 
 import db.ActivityInformation;
 import db.ActivityProgress;
-import db.DatabaseException;
+import db.exceptions.DatabaseException;
 import db.MemberInformation;
 import ui.components.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.*;
 

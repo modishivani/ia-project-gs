@@ -1,7 +1,7 @@
 package ui;
 
 import db.Database;
-import db.DatabaseException;
+import db.exceptions.DatabaseException;
 
 import javax.swing.*;
 import java.awt.*;

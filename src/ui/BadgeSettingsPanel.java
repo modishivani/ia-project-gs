@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import db.*;
+import db.exceptions.DatabaseException;
 
 public class BadgeSettingsPanel extends ActivitySettingsPanel {
 

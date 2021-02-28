@@ -2,10 +2,8 @@ package ui;
 
 import db.ActivityInformation;
 import db.ActivityProgress;
-import db.DatabaseException;
+import db.exceptions.DatabaseException;
 import db.MemberInformation;
-import ui.ActivityProgressPanel;
-import ui.MainFrame;
 
 import java.util.ArrayList;
 

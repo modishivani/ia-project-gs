@@ -1,20 +1,8 @@
 import com.formdev.flatlaf.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import db.*;
+import db.exceptions.DatabaseException;
 import ui.MainFrame;
-import ui.SettingsPanel;
-import ui.components.LargeIconButton;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import db.MemberInformation;
 
 public class Main {
     static final int PANEL_WIDTH = 800;

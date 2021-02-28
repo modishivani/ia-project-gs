@@ -2,7 +2,7 @@ package ui;
 
 import db.ActivityInformation;
 import db.ActivityProgress;
-import db.DatabaseException;
+import db.exceptions.DatabaseException;
 import db.MemberInformation;
 
 

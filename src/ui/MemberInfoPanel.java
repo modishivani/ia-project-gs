@@ -1,6 +1,6 @@
 package ui;
 
-import db.DatabaseException;
+import db.exceptions.DatabaseException;
 import db.MemberInformation;
 import ui.components.LabelTextField;
 import ui.components.TopInfoPanel;

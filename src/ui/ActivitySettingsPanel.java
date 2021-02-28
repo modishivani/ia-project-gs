@@ -1,9 +1,8 @@
 package ui;
 
-import db.ActivityInUseException;
+import db.exceptions.ActivityInUseException;
 import db.ActivityInformation;
-import db.DatabaseException;
-import db.MemberInformation;
+import db.exceptions.DatabaseException;
 import ui.components.LabelTextField;
 
 import javax.swing.*;
