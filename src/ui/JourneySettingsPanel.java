@@ -30,8 +30,8 @@ public class JourneySettingsPanel extends ActivitySettingsPanel {
     }
 
     @Override
-    protected void removeActivityInformation(String name) {
-        this.mainFrame.getDb().removeJourney(name);
+    protected void removeActivityInformation(String name, boolean removeProgress) throws DatabaseException {
+        this.mainFrame.getDb().removeJourney(name, removeProgress);
     }
 
 }

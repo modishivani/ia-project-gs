@@ -140,7 +140,8 @@ public class MemberInfoPanel extends JPanel {
                 try {
                     saveMember();
                 } catch (DatabaseException databaseException) {
-                    databaseException.printStackTrace();
+                    Utility.showDatabaseException(mainFrame, databaseException);
+                    return;
                 }
             }
         });
@@ -188,8 +189,8 @@ public class MemberInfoPanel extends JPanel {
             }
 
         } catch (DatabaseException e) {
-            // TODO: replace with message box
-            System.out.println(e.toString());
+           Utility.showDatabaseException(this.mainFrame, e);
+           return;
         }
     }
 

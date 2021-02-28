@@ -31,7 +31,7 @@ public abstract class ActivityProgressPanel extends JPanel {
     private final LabelCheckBox step4Checkbox = new LabelCheckBox("Step 4:");
     private final LabelCheckBox step5Checkbox = new LabelCheckBox("Step 5:");
 
-    private final JButton saveProgressButton = new JButton(" Save Badge Progress ");
+    private final JButton saveProgressButton;
 
     private MemberInformation selectedMemberInformation;
     private ActivityInformation selectedActivityInformation;
@@ -42,6 +42,7 @@ public abstract class ActivityProgressPanel extends JPanel {
         this.activityKind = activityKind;
         this.activityNameField = new LabelTextArea(" " + this.activityKind + " Name: ");
         this.activityDescription = new LabelTextArea(" " + this.activityKind + " Description: ");
+        this.saveProgressButton = new JButton(" Save " + this.activityKind + " Progress ");
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
 
@@ -74,7 +75,7 @@ public abstract class ActivityProgressPanel extends JPanel {
         this.memberList.setOpaque(false);
         this.memberList.addListSelectionListener(e -> setSelectedMember());
 
-        memberListPanel.setPreferredSize(new Dimension(200, 0));
+        memberListPanel.setPreferredSize(new Dimension(150, 0));
         TitledBorder titledBorder = new TitledBorder(" Names ");
         titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
         memberListPanel.setBorder(
@@ -115,12 +116,8 @@ public abstract class ActivityProgressPanel extends JPanel {
         Utility.setBoldFont(dropDownLabel);
         dropDownLabel.setForeground(new Color(9,95,54));
         JPanel activityDropDownPanel = new JPanel();
-        ArrayList<String> activityNames = this.getActivityNames();
 
         this.activitiesDropDown.setEditable(false);
-        for (int i = 0; i < activityNames.size(); i++) {
-            this.activitiesDropDown.addItem(activityNames.get(i));
-        }
 
         this.activitiesDropDown.addActionListener(e -> setSelectedActivity());
 
@@ -185,9 +182,9 @@ public abstract class ActivityProgressPanel extends JPanel {
             } else {
                 this.selectedActivityInformation = null;
             }
-        } catch(DatabaseException databaseException) {
-            // TODO: replace with message box
-            databaseException.printStackTrace();
+        } catch (DatabaseException databaseException) {
+            Utility.showDatabaseException(this.mainFrame, databaseException);
+            return;
         }
     }
 
@@ -201,8 +198,8 @@ public abstract class ActivityProgressPanel extends JPanel {
                 this.selectedMemberInformation = null;
             }
         } catch (DatabaseException e) {
-            // TODO: replace with message box
-            System.out.println(e.toString());
+            Utility.showDatabaseException(this.mainFrame, e);
+            return;
         }
     }
 
@@ -273,8 +270,8 @@ public abstract class ActivityProgressPanel extends JPanel {
             this.mainFrame.getDb().addOrModifyMember(this.selectedMemberInformation);
             this.saveProgressButton.setEnabled(false);
         } catch (DatabaseException e) {
-            // TODO: replace with message box
-            System.out.println(e.toString());
+           Utility.showDatabaseException(this.mainFrame, e);
+           return;
         }
     }
 
@@ -294,6 +291,12 @@ public abstract class ActivityProgressPanel extends JPanel {
         if (!this.memberNamesListModel.isEmpty()) {
             this.memberList.setSelectedIndex(0);
             this.setSelectedMember();
+        }
+
+        this.activitiesDropDown.removeAllItems();
+        ArrayList<String> activityNames = this.getActivityNames();
+        for (int i = 0; i < activityNames.size(); i++) {
+            this.activitiesDropDown.addItem(activityNames.get(i));
         }
 
         if (this.activitiesDropDown.getItemCount() != 0) {

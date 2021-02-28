@@ -8,6 +8,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Database {
 
@@ -115,8 +116,7 @@ public class Database {
      */
     public void addOrModifyBadge(
         BadgeInformation badgeInformation) throws DatabaseException {
-
-        // TODO: validate badgeInformation
+        badgeInformation.validate();
 
         writeObject(
             badgeInformation,
@@ -124,8 +124,27 @@ public class Database {
         );
     }
 
-    public void removeBadge(
-        String name) {
+    public void removeBadge(String name, boolean removeProgress)
+            throws DatabaseException {
+
+        int usedBy = 0;
+
+        for(String memberName: this.listMemberNames()) {
+            MemberInformation memberInformation = this.getMember(memberName);
+            Hashtable<String, ActivityProgress> badgeProgress = memberInformation.getBadgeProgress();
+            if (badgeProgress.containsKey(name)) {
+                usedBy++;
+                if (removeProgress) {
+                    badgeProgress.remove(name);
+                    addOrModifyMember(memberInformation);
+                }
+            }
+        }
+
+        if (!removeProgress && (usedBy > 0)) {
+            throw new ActivityInUseException(usedBy + " member(s) have progress for this badge.");
+        }
+
         String badgeFileName = getBadgeFileName(name);
         File badgeFile = new File(badgeFileName);
         if (badgeFile.exists()) {
@@ -171,21 +190,40 @@ public class Database {
       Journeys
      */
     public void addOrModifyJourney(JourneyInformation journeyInformation) throws DatabaseException {
-
-        // TODO: validate journeyInformation
-
+        journeyInformation.validate();
         writeObject(
                 journeyInformation,
                 getJourneyFileName(journeyInformation.getName())
         );
     }
 
-    public void removeJourney(String name) {
+    public void removeJourney(String name, boolean removeProgress)
+        throws DatabaseException {
+
+        int usedBy = 0;
+
+        for(String memberName: this.listMemberNames()) {
+            MemberInformation memberInformation = this.getMember(memberName);
+            Hashtable<String, ActivityProgress> journeyProgress = memberInformation.getJourneyProgress();
+            if (journeyProgress.containsKey(name)) {
+                usedBy++;
+                if (removeProgress) {
+                    journeyProgress.remove(name);
+                    addOrModifyMember(memberInformation);
+                }
+            }
+        }
+
+        if (!removeProgress && (usedBy > 0)) {
+            throw new ActivityInUseException(usedBy + " member(s) have progress for this journey.");
+        }
+
         String journeyFileName = getJourneyFileName(name);
         File journeyFile = new File(journeyFileName);
         if (journeyFile.exists()) {
             journeyFile.delete();
         }
+
     }
 
     public ArrayList<String> listJourneyNames() {

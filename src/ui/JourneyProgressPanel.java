@@ -1,41 +1,41 @@
 package ui;
 
-import ui.components.IconCaptionButton;
+import db.ActivityInformation;
+import db.ActivityProgress;
+import db.DatabaseException;
+import db.MemberInformation;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 
-public class JourneyProgressPanel extends JPanel {
-    private final MainFrame mainFrame;
+import java.util.ArrayList;
 
-    public JourneyProgressPanel(MainFrame mainFrame) {
-        super();
-        this.mainFrame = mainFrame;
-        this.setLayout(new BorderLayout());
-        this.add(createTopPanel(), BorderLayout.NORTH);
+public class JourneyProgressPanel extends ActivityProgressPanel {
+
+    public JourneyProgressPanel(MainFrame mainFrame) throws DatabaseException {
+        super(mainFrame, "Journey");
     }
 
-    private JPanel createTopPanel() {
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BorderLayout());
-
-        IconCaptionButton homeButton = new IconCaptionButton(
-                "/images/homeIcon.png",
-                "Home");
-        homeButton.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.setMainPanel(PanelNames.HOME);
-            }
-        });
-        JLabel badgesLabel = new JLabel(" Journey Progress");
-        badgesLabel.setFont(badgesLabel.getFont().deriveFont(45f));
-        badgesLabel.setHorizontalAlignment(JLabel.LEFT);
-
-        topPanel.add(homeButton, BorderLayout.WEST);
-        topPanel.add(badgesLabel, BorderLayout.CENTER);
-
-        return topPanel;
+    @Override
+    protected ArrayList<String> getActivityNames() {
+        return this.mainFrame.getDb().listJourneyNames();
     }
+
+    @Override
+    protected ActivityInformation getActivityInformation(String name) throws DatabaseException {
+        return this.mainFrame.getDb().getJourney(name);
+    }
+
+    @Override
+    protected ActivityProgress getActivityProgress(MemberInformation member, String activityName) {
+        if (member.getJourneyProgress().containsKey(activityName)) {
+            return member.getJourneyProgress().get(activityName);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    protected void addOrModifyActivityProgress(MemberInformation member, ActivityProgress activityProgress) {
+        member.getJourneyProgress().put(activityProgress.getName(), activityProgress);
+    }
+
 }

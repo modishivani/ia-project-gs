@@ -7,9 +7,6 @@ public class ActivityProgress {
 
     public ActivityProgress(ActivityInformation activityInformation) {
 
-        // TODO: validate activity information is not null
-        // TODO: validate activiry information
-
         this.name = activityInformation.getName();
 
         String[] steps = activityInformation.getSteps();
@@ -34,7 +31,7 @@ public class ActivityProgress {
         this.stepProgress[index] = isCompleted;
     }
 
-    void validate() {
+    void validate() throws IllegalArgumentException {
         Argument.ensureNotNull("ActivityProgress.stepProgress", this.stepProgress);
     }
 }

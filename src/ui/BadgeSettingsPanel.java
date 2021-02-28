@@ -31,7 +31,7 @@ public class BadgeSettingsPanel extends ActivitySettingsPanel {
     }
 
     @Override
-    protected void removeActivityInformation(String name) {
-        this.mainFrame.getDb().removeBadge(name);
+    protected void removeActivityInformation(String name, boolean removeProgress) throws DatabaseException {
+        this.mainFrame.getDb().removeBadge(name, removeProgress);
     }
 }

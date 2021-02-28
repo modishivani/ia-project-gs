@@ -1,5 +1,6 @@
 package ui;
 
+import db.ActivityInUseException;
 import db.ActivityInformation;
 import db.DatabaseException;
 import db.MemberInformation;
@@ -199,13 +200,9 @@ public abstract class ActivitySettingsPanel extends JPanel {
             }
             this.setActivityDetailEditable(false, false);
 
-        } catch (Exception e){
-            int input = JOptionPane.showConfirmDialog(
-                    this.mainFrame,
-                    e.getMessage(),
-                    "Error",
-                    JOptionPane.CLOSED_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (DatabaseException e){
+            Utility.showDatabaseException(this.mainFrame, e);
+            return;
         }
     }
 
@@ -214,19 +211,50 @@ public abstract class ActivitySettingsPanel extends JPanel {
         int input = JOptionPane.showConfirmDialog(  //yes = 0, no = 1
                 this.mainFrame,
                 "Are you sure you want to delete " + selectedValue + " ?",
-                "",
+                "Deletion Confirmation",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
-        if (input == 0) {
-            this.removeActivityInformation(selectedValue);
+        if (input != 0) {
+            return;
+        }
 
-            int selectedIndex = activityList.getSelectedIndex();
-            this.activityListModel.remove(selectedIndex);
+        try {
+            this.removeActivityInformation(selectedValue, false);
 
-            if (selectedIndex != 0) {
-                selectedIndex--;
+        } catch(ActivityInUseException e) {
+            int input2 = JOptionPane.showConfirmDialog(  //yes = 0, no = 1
+                    this.mainFrame,
+                    e.getMessage() +
+                    " Are you sure you want to delete " + selectedValue + " ?",
+                    "Deletion Confirmation",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE);
+            if (input2 != 0) {
+                return;
             }
+        }
+        catch (DatabaseException dbe) {
+            Utility.showDatabaseException(this.mainFrame, dbe);
+            return;
+        }
 
+        try {
+            this.removeActivityInformation(selectedValue, true);
+        } catch (DatabaseException dbe1) {
+            Utility.showDatabaseException(this.mainFrame, dbe1);
+            return;
+        }
+
+        int selectedIndex = activityList.getSelectedIndex();
+        this.activityListModel.remove(selectedIndex);
+
+        if (selectedIndex != 0) {
+            selectedIndex--;
+        }
+
+        if (activityListModel.isEmpty()) {
+            this.clearFields();
+        } else {
             ListSelectionModel sm = activityList.getSelectionModel();
             sm.clearSelection();
             sm.setSelectionInterval(selectedIndex, selectedIndex);
@@ -253,8 +281,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
             }
 
         } catch (DatabaseException e) {
-            // TODO: replace with message box
-            System.out.println(e.toString());
+            Utility.showDatabaseException(this.mainFrame, e);
+            return;
         }
     }
 
@@ -304,6 +332,16 @@ public abstract class ActivitySettingsPanel extends JPanel {
         return true;
     }
 
+    void clearFields() {
+        this.activityNameField.setText("");
+        this.descriptionField.setText("");
+        this.step1Field.setText("");
+        this.step2Field.setText("");
+        this.step3Field.setText("");
+        this.step4Field.setText("");
+        this.step5Field.setText("");
+    }
+
     void loadData() {
 
         ArrayList<String> activityNames = this.getActivityNames();
@@ -314,6 +352,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
         this.activityList.requestFocus();
         if (!this.activityListModel.isEmpty()) {
             this.activityList.setSelectedIndex(0);
+        } else {
+            this.clearFields();
         }
     }
 
@@ -323,5 +363,5 @@ public abstract class ActivitySettingsPanel extends JPanel {
             throws DatabaseException;
     protected abstract void addOrModifyActivityInformation(ActivityInformation activity)
             throws DatabaseException;
-    protected abstract void removeActivityInformation(String name);
+    protected abstract void removeActivityInformation(String name, boolean removeProgress) throws DatabaseException;
 }
