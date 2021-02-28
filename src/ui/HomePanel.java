@@ -29,7 +29,7 @@ public class HomePanel extends JPanel {
         titleText.setHorizontalAlignment(JLabel.CENTER);
 
         IconPanel gsLogo = new IconPanel("/images/girlScoutLogo.png");
-
+        gsLogo.setBorder(new EmptyBorder(10,10,10,10));
         titlePanel.add(titleText, BorderLayout.NORTH);
         titlePanel.add(gsLogo, BorderLayout.CENTER);
 
@@ -37,7 +37,7 @@ public class HomePanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(createButtonPanel(), BorderLayout.CENTER);
-
+        this.setBorder(new EmptyBorder(25, 5, 10, 5));
         this.setBackground(new Color(233,246,220));
     }
 
@@ -90,23 +90,11 @@ public class HomePanel extends JPanel {
             }
         });
 
-        LargeIconButton eventsButton = new LargeIconButton(
-                "/images/calendarIcon.png",
-                "Key Events",
-                "Track and View Upcoming Troop Events");
-        eventsButton.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.setMainPanel(PanelNames.EVENTS);
-            }
-        });
-
         buttonPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         buttonPanel.add(membersButton);
-        buttonPanel.add(eventsButton);
+        buttonPanel.add(settingsButton);
         buttonPanel.add(badgesButton);
         buttonPanel.add(journeysButton);
-        buttonPanel.add(settingsButton);
 
         return buttonPanel;
     }

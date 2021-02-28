@@ -13,14 +13,14 @@ public class Utility {
         component.setFont(f.deriveFont(f.getStyle() | Font.BOLD ));
     }
 
-    public static void showDatabaseException(JFrame owner, DatabaseException dbe) {
-        showDatabaseException(owner, dbe, "");
+    public static void showException(JFrame owner, Exception e) {
+        showException(owner, e, "");
     }
 
-    public static void showDatabaseException(JFrame owner, DatabaseException dbe, String message) {
+    public static void showException(JFrame owner, Exception e, String message) {
         JOptionPane.showMessageDialog(
             owner,
-            dbe.getMessage() + message,
+            e.getMessage() + message,
             "Error",
             JOptionPane.ERROR_MESSAGE);
     }

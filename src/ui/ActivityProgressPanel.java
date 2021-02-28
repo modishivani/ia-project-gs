@@ -182,8 +182,8 @@ public abstract class ActivityProgressPanel extends JPanel {
             } else {
                 this.selectedActivityInformation = null;
             }
-        } catch (DatabaseException databaseException) {
-            Utility.showDatabaseException(this.mainFrame, databaseException);
+        } catch (Exception e) {
+            Utility.showException(this.mainFrame, e);
             return;
         }
     }
@@ -197,8 +197,8 @@ public abstract class ActivityProgressPanel extends JPanel {
             } else {
                 this.selectedMemberInformation = null;
             }
-        } catch (DatabaseException e) {
-            Utility.showDatabaseException(this.mainFrame, e);
+        } catch (Exception e) {
+            Utility.showException(this.mainFrame, e);
             return;
         }
     }
@@ -269,8 +269,8 @@ public abstract class ActivityProgressPanel extends JPanel {
         try {
             this.mainFrame.getDb().addOrModifyMember(this.selectedMemberInformation);
             this.saveProgressButton.setEnabled(false);
-        } catch (DatabaseException e) {
-           Utility.showDatabaseException(this.mainFrame, e);
+        } catch (Exception e) {
+           Utility.showException(this.mainFrame, e);
            return;
         }
     }

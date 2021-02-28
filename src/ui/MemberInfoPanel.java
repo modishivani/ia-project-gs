@@ -139,8 +139,8 @@ public class MemberInfoPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     saveMember();
-                } catch (DatabaseException databaseException) {
-                    Utility.showDatabaseException(mainFrame, databaseException);
+                } catch (Exception e1) {
+                    Utility.showException(mainFrame, e1);
                     return;
                 }
             }
@@ -188,8 +188,8 @@ public class MemberInfoPanel extends JPanel {
                 this.selectedMemberInformation = null;
             }
 
-        } catch (DatabaseException e) {
-           Utility.showDatabaseException(this.mainFrame, e);
+        } catch (Exception e) {
+           Utility.showException(this.mainFrame, e);
            return;
         }
     }

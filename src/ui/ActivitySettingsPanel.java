@@ -200,8 +200,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
             }
             this.setActivityDetailEditable(false, false);
 
-        } catch (DatabaseException e){
-            Utility.showDatabaseException(this.mainFrame, e);
+        } catch (Exception e){
+            Utility.showException(this.mainFrame, e);
             return;
         }
     }
@@ -233,15 +233,15 @@ public abstract class ActivitySettingsPanel extends JPanel {
                 return;
             }
         }
-        catch (DatabaseException dbe) {
-            Utility.showDatabaseException(this.mainFrame, dbe);
+        catch (Exception e) {
+            Utility.showException(this.mainFrame, e);
             return;
         }
 
         try {
             this.removeActivityInformation(selectedValue, true);
-        } catch (DatabaseException dbe1) {
-            Utility.showDatabaseException(this.mainFrame, dbe1);
+        } catch (Exception e1) {
+            Utility.showException(this.mainFrame, e1);
             return;
         }
 
@@ -254,6 +254,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
 
         if (activityListModel.isEmpty()) {
             this.clearFields();
+            this.setActivityDetailEditable(false, false);
         } else {
             ListSelectionModel sm = activityList.getSelectionModel();
             sm.clearSelection();
@@ -280,8 +281,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
                 this.selectedActivityInformation = null;
             }
 
-        } catch (DatabaseException e) {
-            Utility.showDatabaseException(this.mainFrame, e);
+        } catch (Exception e) {
+            Utility.showException(this.mainFrame, e);
             return;
         }
     }
@@ -354,6 +355,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             this.activityList.setSelectedIndex(0);
         } else {
             this.clearFields();
+            this.setActivityDetailEditable(false,false);
         }
     }
 

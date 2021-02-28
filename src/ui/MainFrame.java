@@ -19,7 +19,6 @@ public class MainFrame extends JFrame {
     private JourneyProgressPanel journeyProgressPanel;
     private MemberInfoPanel memberInfoPanel;
     private SettingsPanel settingsPanel;
-    private EventsPanel eventsPanel;
 
     public MainFrame() throws DatabaseException {
         super();
@@ -40,14 +39,12 @@ public class MainFrame extends JFrame {
         this.journeyProgressPanel = new JourneyProgressPanel(this);
         this.memberInfoPanel = new MemberInfoPanel(this);
         this.settingsPanel = new SettingsPanel(this);
-        this.eventsPanel = new EventsPanel(this);
 
         this.framePanel.add(homePanel, PanelNames.HOME);
         this.framePanel.add(badgeProgressPanel, PanelNames.BADGE_PROGRESS);
         this.framePanel.add(journeyProgressPanel, PanelNames.JOURNEY_PROGRESS);
         this.framePanel.add(memberInfoPanel, PanelNames.MEMBER_INFO);
         this.framePanel.add(settingsPanel, PanelNames.SETTINGS);
-        this.framePanel.add(eventsPanel, PanelNames.EVENTS);
 
         this.getContentPane().setLayout(new BorderLayout());
         this.getContentPane().add(
@@ -71,14 +68,17 @@ public class MainFrame extends JFrame {
                 if (this.badgeProgressPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
+                break;
             case PanelNames.JOURNEY_PROGRESS:
                 if (this.journeyProgressPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
+                break;
             case PanelNames.SETTINGS:
                 if (this.settingsPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
+                break;
             default:
                 this.framePanelLayout.show(this.framePanel, name);
         }
