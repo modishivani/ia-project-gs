@@ -48,7 +48,7 @@ public class HomePanel extends JPanel {
 
         LargeIconButton membersButton = new LargeIconButton(
                 "/images/memberIcon.png",
-                "Members",
+                "Member Information",
                 "Add New Members and Access Current Member Information");
         membersButton.addActionListener(new AbstractAction() {
             @Override
@@ -59,8 +59,8 @@ public class HomePanel extends JPanel {
 
         LargeIconButton badgesButton = new LargeIconButton(
                 "/images/badgeIcon.png",
-                "Badges",
-                "View and Track Current Badge Progress by Girl");
+                "Badge Progress",
+                "View and Track Current Badge Progress by Member");
         badgesButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,8 +70,8 @@ public class HomePanel extends JPanel {
 
         LargeIconButton journeysButton = new LargeIconButton(
                 "/images/journeyIcon.png",
-                "Journeys",
-                "View and Track Current Journey Progress by Girl");
+                "Journey Progress",
+                "View and Track Current Journey Progress by Member");
         journeysButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
