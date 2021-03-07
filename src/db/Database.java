@@ -260,77 +260,12 @@ public class Database {
         return Paths.get(this.journeysDirectory, name + ".json").toString();
     }
 
-
-
-    /*
-      Events
-     */
-    public void addEvent(EventInformation eventInformation) throws DatabaseException {
-
-        if (eventInformation.getName() == null) {
-            //throw exception
-        }
-
-        writeObject(
-                eventInformation,
-                getEventFileName(eventInformation.getName())
-        );
-    }
-
-    public void removeEvent(String name) {
-        String eventFileName = getEventFileName(name);
-        File eventFile = new File(eventFileName);
-        if (eventFile.exists()) {
-            eventFile.delete();
-        }
-    }
-
-    public void modifyEvent(EventInformation eventInformation) throws DatabaseException {
-
-        addEvent(eventInformation);
-    }
-
-    public ArrayList<String> listEventNames() {
-
-        ArrayList<String> eventNames = new ArrayList<>();
-        File eventDirectory = new File(this.eventsDirectory);
-        String[] files = eventDirectory.list();
-
-        if (files != null) {
-            for (String fileName : files) {
-                if (fileName.endsWith(".json")) {
-                    fileName = fileName.substring(0, fileName.length() - 5);
-                    eventNames.add(fileName);
-                }
-            }
-        }
-
-        return eventNames;
-    }
-
-    public EventInformation getEvent(String name)
-    throws DatabaseException{
-
-        return (EventInformation) readObject(
-                getEventFileName(name),
-                EventInformation.class
-        );
-    }
-
-    private String getEventFileName(String name) {
-        return Paths.get(this.eventsDirectory, name + ".json").toString();
-    }
-
     private void EnsureDirectory(String directory) {
         File f = new File(directory);
         f.mkdirs();
     }
 
-    private void writeObject(
-        Object src,
-        String fileName)
-        throws DatabaseException {
-
+    private void writeObject(Object src, String fileName) throws DatabaseException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(fileName)) {
             writer.write(gson.toJson(src));
@@ -341,10 +276,7 @@ public class Database {
         }
     }
 
-    private Object readObject(
-        String fileName,
-        Type objectType)
-        throws DatabaseException {
+    private Object readObject(String fileName, Type objectType) throws DatabaseException {
         Gson gson = new Gson();
         FileReader fileReader = null;
         JsonReader jsonReader = null;

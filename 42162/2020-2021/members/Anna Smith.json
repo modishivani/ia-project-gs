@@ -1,0 +1,32 @@
+{
+  "name": "Anna Smith",
+  "age": 15,
+  "grade": 9,
+  "email": "anna@gmail.com",
+  "parentName": "Kelly Smith",
+  "parentEmail": "smithk@gmail.com",
+  "badgeProgress": {
+    "Girl Scout Way": {
+      "name": "Girl Scout Way",
+      "stepProgress": [
+        false,
+        true,
+        false,
+        true,
+        false
+      ]
+    }
+  },
+  "journeyProgress": {
+    "Engineering Journey": {
+      "name": "Engineering Journey",
+      "stepProgress": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
+    }
+  }
+}
