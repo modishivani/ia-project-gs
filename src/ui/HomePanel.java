@@ -1,5 +1,8 @@
 package ui;
 
+import ui.MainFrame;
+import ui.PanelNames;
+import ui.components.ColorScheme;
 import ui.components.IconPanel;
 import ui.components.LargeIconButton;
 
@@ -38,7 +41,7 @@ public class HomePanel extends JPanel {
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(createButtonPanel(), BorderLayout.CENTER);
         this.setBorder(new EmptyBorder(25, 5, 10, 5));
-        this.setBackground(new Color(233,246,220));
+        this.setBackground(ColorScheme.LightGreen);
     }
 
     private JPanel createButtonPanel() {
@@ -98,5 +101,4 @@ public class HomePanel extends JPanel {
 
         return buttonPanel;
     }
-
 }

@@ -7,9 +7,9 @@ import db.MemberInformation;
 
 import java.util.ArrayList;
 
-public class BadgeProgressPanel extends ActivityProgressPanel {
+public class BadgeProgressContentPanel extends ActivityProgressContentPanel {
 
-    public BadgeProgressPanel(MainFrame mainFrame) throws DatabaseException {
+    public BadgeProgressContentPanel(MainFrame mainFrame) throws DatabaseException {
         super(mainFrame, "Badge");
     }
 

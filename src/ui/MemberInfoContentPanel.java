@@ -2,8 +2,8 @@ package ui;
 
 import db.exceptions.DatabaseException;
 import db.MemberInformation;
+import ui.components.ColorScheme;
 import ui.components.LabelTextField;
-import ui.components.TopInfoPanel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -11,50 +11,54 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class MemberInfoPanel extends JPanel {
-
-    private final MainFrame mainFrame;
+public class MemberInfoContentPanel extends ContentPanel {
 
     private DefaultListModel<String> memberNamesListModel;
     private JList<String> memberList;
 
-    private final LabelTextField nameField = new LabelTextField("Name : ");
-    private final LabelTextField ageField = new LabelTextField("Age : ");
-    private final LabelTextField gradeField = new LabelTextField("Grade : ");
-    private final LabelTextField emailField = new LabelTextField("Email : ");
-    private final LabelTextField parentNameField = new LabelTextField("Parent Name : ");
-    private final LabelTextField parentEmailField = new LabelTextField("Parent Email : ");
+    private LabelTextField nameField;
+    private LabelTextField ageField;
+    private LabelTextField gradeField;
+    private LabelTextField emailField;
+    private LabelTextField parentNameField;
+    private LabelTextField parentEmailField;
 
-    JButton addMemberButton = new JButton(" Add Member ");
-    JButton editMemberButton = new JButton(" Edit Member ");
-    JButton saveMemberButton = new JButton(" Save Member ");
-    JButton deleteMemberButton = new JButton(" Delete Member ");
+    JButton addMemberButton;
+    JButton editMemberButton;
+    JButton saveMemberButton;
+    JButton deleteMemberButton;
 
     private MemberInformation selectedMemberInformation;
 
-    public MemberInfoPanel(MainFrame mainFrame) {
-        super();
-        this.mainFrame = mainFrame;
-        this.setLayout(new BorderLayout());
-        this.add(createTopPanel(), BorderLayout.NORTH);
-        this.add(createCenterPanel(), BorderLayout.CENTER);
+    public MemberInfoContentPanel(MainFrame mainFrame) {
+        super(mainFrame, "Member Information");
+        this.createComponents();
+        this.initialize();
     }
 
-    private JPanel createTopPanel() {
-        JPanel topPanel = new TopInfoPanel(this.mainFrame, " Member Information");
-        topPanel.setBackground(new Color(233,246,220));
-        return topPanel;
-    }
-
-    private JPanel createCenterPanel() {
+    protected JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
-        centerPanel.setBackground(new Color(247,252,242));
+        centerPanel.setBackground(ColorScheme.LightPastelGreen);
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(createMemberListPanel(), BorderLayout.WEST);
         centerPanel.add(createMemberDetailsPanel(), BorderLayout.CENTER);
 
-
         return centerPanel;
+    }
+
+    private void createComponents() {
+
+        this.nameField = new LabelTextField("Name : ");
+        this.ageField = new LabelTextField("Age : ");
+        this.gradeField = new LabelTextField("Grade : ");
+        this.emailField = new LabelTextField("Email : ");
+        this.parentNameField = new LabelTextField("Parent Name : ");
+        this.parentEmailField = new LabelTextField("Parent Email : ");
+
+        this.addMemberButton = new JButton(" Add Member ");
+        this.editMemberButton = new JButton(" Edit Member ");
+        this.saveMemberButton = new JButton(" Save Member ");
+        this.deleteMemberButton = new JButton(" Delete Member ");
     }
 
     private JPanel createMemberListPanel() {

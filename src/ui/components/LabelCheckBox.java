@@ -24,7 +24,7 @@ public class LabelCheckBox extends JPanel{
         labelField.setBorder(new EmptyBorder(5,5,5,5));
         Utility utility = new Utility();
         utility.setBoldFont(labelField);
-        labelField.setForeground(new Color(9,95,54));
+        labelField.setForeground(ColorScheme.DarkGreen);
 
         westPanel.add(checkBox, BorderLayout.WEST);
         westPanel.add(labelField, BorderLayout.CENTER);

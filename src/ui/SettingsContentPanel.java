@@ -6,33 +6,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class SettingsPanel extends JPanel {
+public class SettingsContentPanel extends ContentPanel {
 
-    private final MainFrame mainFrame;
-
-    JButton badgeSettingsButton = new JButton(" Badge Settings ");
-    JButton journeySettingsButton = new JButton(" Journey Settings ");
+    private JButton badgeSettingsButton;
+    private JButton journeySettingsButton;
 
     private BadgeSettingsPanel badgeSettingsPanel;
     private JourneySettingsPanel journeySettingsPanel;
 
-    public SettingsPanel(MainFrame mainFrame) {
-        super();
-        this.mainFrame = mainFrame;
-        this.setLayout(new BorderLayout());
-        this.add(createTopPanel(), BorderLayout.NORTH);
-        this.add(createCenterPanel(), BorderLayout.CENTER);
+    public SettingsContentPanel(MainFrame mainFrame) {
+        super(mainFrame, "Badge and Journey Settings");
+        this.createComponents();
+        this.initialize();
     }
 
-    private JPanel createTopPanel() {
-        JPanel topPanel = new TopInfoPanel(this.mainFrame, " Badge and Journey Settings");
-        topPanel.setBackground(new Color(233,246,220));
-        return topPanel;
-    }
-
-    private JPanel createCenterPanel() {
+    protected JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
-        centerPanel.setBackground(new Color(247,252,242));
+        centerPanel.setBackground(ColorScheme.LightPastelGreen);
 
         JPanel settingsDisplayPanel = new JPanel();
         settingsDisplayPanel.setOpaque(false);
@@ -79,6 +69,12 @@ public class SettingsPanel extends JPanel {
         return centerPanel;
     }
 
+    private void createComponents() {
+
+        this.badgeSettingsButton = new JButton(" Badge Settings ");
+        this.journeySettingsButton = new JButton(" Journey Settings ");
+    }
+
     private JPanel createBadgeJourneyButtonsPanel() {
         JPanel badgeJourneyButtonsPanel = new JPanel();
         badgeJourneyButtonsPanel.setOpaque(false);
@@ -93,9 +89,9 @@ public class SettingsPanel extends JPanel {
         ImageIcon journeysIcon = new ImageIcon(image2);
 
         this.badgeSettingsButton.setIcon(badgesIcon);
-        this.badgeSettingsButton.setForeground(new Color(9,95,54));
+        this.badgeSettingsButton.setForeground(ColorScheme.DarkGreen);
         this.journeySettingsButton.setIcon(journeysIcon);
-        this.journeySettingsButton.setForeground(new Color(9,95,54));
+        this.journeySettingsButton.setForeground(ColorScheme.DarkGreen);
 
         badgeJourneyButtonsPanel.add(this.badgeSettingsButton);
         badgeJourneyButtonsPanel.add(this.journeySettingsButton);

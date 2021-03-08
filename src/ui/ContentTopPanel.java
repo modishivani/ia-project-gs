@@ -1,15 +1,16 @@
-package ui.components;
+package ui;
 
 import ui.MainFrame;
 import ui.PanelNames;
+import ui.components.IconCaptionButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class TopInfoPanel extends JPanel {
+public class ContentTopPanel extends JPanel {
 
-    public TopInfoPanel(MainFrame mainFrame, String infoName) {
+    public ContentTopPanel(MainFrame mainFrame, String infoName) {
         this.setLayout(new BorderLayout());
 
         IconCaptionButton homeButton = new IconCaptionButton(

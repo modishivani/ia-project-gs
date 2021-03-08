@@ -17,7 +17,7 @@ public class LabelTextArea extends JPanel{
         JLabel fieldTitle = new JLabel(label);
         Utility utility = new Utility();
         utility.setBoldFont(fieldTitle);
-        fieldTitle.setForeground(new Color(9,95,54));
+        fieldTitle.setForeground(ColorScheme.DarkGreen);
         fieldTitle.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         this.textLabel = new JLabel();

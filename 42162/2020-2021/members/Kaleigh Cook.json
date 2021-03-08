@@ -22,7 +22,7 @@
       "name": "Engineering Journey",
       "stepProgress": [
         false,
-        false,
+        true,
         false,
         true,
         false

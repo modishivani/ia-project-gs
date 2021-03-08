@@ -5,63 +5,63 @@ import db.ActivityProgress;
 import db.exceptions.DatabaseException;
 import db.MemberInformation;
 import ui.components.*;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.util.*;
 import java.awt.*;
 
 
-public abstract class ActivityProgressPanel extends JPanel {
+public abstract class ActivityProgressContentPanel extends ContentPanel {
 
-    protected final MainFrame mainFrame;
-
-    private final String activityKind;
+    private String activityKind;
 
     private DefaultListModel<String> memberNamesListModel;
     private JList<String> memberList;
 
-    private final JComboBox<String> activitiesDropDown = new JComboBox<>();
-
-    private final LabelTextArea activityNameField;
-    private final LabelTextArea activityDescription;
-    private final LabelCheckBox step1Checkbox = new LabelCheckBox("Step 1:");
-    private final LabelCheckBox step2Checkbox = new LabelCheckBox("Step 2:");
-    private final LabelCheckBox step3Checkbox = new LabelCheckBox("Step 3:");
-    private final LabelCheckBox step4Checkbox = new LabelCheckBox("Step 4:");
-    private final LabelCheckBox step5Checkbox = new LabelCheckBox("Step 5:");
-
-    private final JButton saveProgressButton;
+    private JComboBox<String> activitiesDropDown;
+    private LabelTextArea activityNameField;
+    private LabelTextArea activityDescription;
+    private LabelCheckBox step1Checkbox;
+    private LabelCheckBox step2Checkbox;
+    private LabelCheckBox step3Checkbox;
+    private LabelCheckBox step4Checkbox;
+    private LabelCheckBox step5Checkbox;
+    private JButton saveProgressButton;
 
     private MemberInformation selectedMemberInformation;
     private ActivityInformation selectedActivityInformation;
 
-    public ActivityProgressPanel(MainFrame mainFrame, String activityKind) throws DatabaseException {
+    public ActivityProgressContentPanel(MainFrame mainFrame, String activityKind) throws DatabaseException {
+        super(mainFrame, activityKind + " Progress");
 
-        this.mainFrame = mainFrame;
         this.activityKind = activityKind;
-        this.activityNameField = new LabelTextArea(" " + this.activityKind + " Name: ");
-        this.activityDescription = new LabelTextArea(" " + this.activityKind + " Description: ");
-        this.saveProgressButton = new JButton(" Save " + this.activityKind + " Progress ");
-        this.setLayout(new BorderLayout());
-        this.setOpaque(false);
 
-        this.add(createTopPanel(), BorderLayout.NORTH);
-        this.add(createCenterPanel(), BorderLayout.CENTER);
+        this.createComponents();
+        this.initialize();
     }
 
-    private JPanel createTopPanel() {
-        JPanel topPanel = new TopInfoPanel(this.mainFrame, " " + this.activityKind + " Progress");
-        topPanel.setBackground(new Color(233, 246, 220));
-        return topPanel;
-    }
-
-    private JPanel createCenterPanel() {
+    protected JPanel createCenterPanel() {
         JPanel centerPanel = new JPanel();
-        centerPanel.setBackground(new Color(247, 252, 242));
+        centerPanel.setBackground(ColorScheme.LightPastelGreen);
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(createMemberListPanel(), BorderLayout.WEST);
         centerPanel.add(createProgressInformationPanel(), BorderLayout.CENTER);
         return centerPanel;
+    }
+
+    private void createComponents() {
+        this.activityNameField = new LabelTextArea(" " + this.activityKind + " Name: ");
+        this.activityDescription = new LabelTextArea(" " + this.activityKind + " Description: ");
+        this.saveProgressButton = new JButton(" Save " + this.activityKind + " Progress ");
+
+        this.activitiesDropDown = new JComboBox<>();
+
+        this.step1Checkbox = new LabelCheckBox("Step 1:");
+        this.step2Checkbox = new LabelCheckBox("Step 2:");
+        this.step3Checkbox = new LabelCheckBox("Step 3:");
+        this.step4Checkbox = new LabelCheckBox("Step 4:");
+        this.step5Checkbox = new LabelCheckBox("Step 5:");
     }
 
     private JPanel createMemberListPanel() {
@@ -113,8 +113,9 @@ public abstract class ActivityProgressPanel extends JPanel {
         JLabel dropDownLabel = new JLabel("Choose a " + this.activityKind + " From the List to View Progress for the Selected Member: ");
         Utility utility = new Utility();
         Utility.setBoldFont(dropDownLabel);
-        dropDownLabel.setForeground(new Color(9,95,54));
+        dropDownLabel.setForeground(ColorScheme.DarkGreen);
         JPanel activityDropDownPanel = new JPanel();
+
 
         this.activitiesDropDown.setEditable(false);
 
@@ -152,6 +153,7 @@ public abstract class ActivityProgressPanel extends JPanel {
         stepsChecklistPanel.setLayout(gridLayout);
         stepsChecklistPanel.add(this.activityNameField);
         stepsChecklistPanel.add(this.activityDescription);
+
         stepsChecklistPanel.add(this.step1Checkbox);
         stepsChecklistPanel.add(this.step2Checkbox);
         stepsChecklistPanel.add(this.step3Checkbox);

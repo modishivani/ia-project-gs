@@ -11,14 +11,15 @@ public class MainFrame extends JFrame {
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
 
-
     private JPanel framePanel;
     private CardLayout framePanelLayout;
     private Database db;
-    private BadgeProgressPanel badgeProgressPanel;
-    private JourneyProgressPanel journeyProgressPanel;
-    private MemberInfoPanel memberInfoPanel;
-    private SettingsPanel settingsPanel;
+
+    private HomePanel homePanel;
+    private BadgeProgressContentPanel badgeProgressPanel;
+    private JourneyProgressContentPanel journeyProgressContentPanel;
+    private MemberInfoContentPanel memberInfoContentPanel;
+    private SettingsContentPanel settingsContentPanel;
 
     public MainFrame() throws DatabaseException {
         super();
@@ -34,17 +35,17 @@ public class MainFrame extends JFrame {
         this.framePanel.setLayout(this.framePanelLayout);
 
         // create and add main panels to the frame panel
-        HomePanel homePanel = new HomePanel(this);
-        this.badgeProgressPanel = new BadgeProgressPanel(this);
-        this.journeyProgressPanel = new JourneyProgressPanel(this);
-        this.memberInfoPanel = new MemberInfoPanel(this);
-        this.settingsPanel = new SettingsPanel(this);
+        this.homePanel = new HomePanel(this);
+        this.badgeProgressPanel = new BadgeProgressContentPanel(this);
+        this.journeyProgressContentPanel = new JourneyProgressContentPanel(this);
+        this.memberInfoContentPanel = new MemberInfoContentPanel(this);
+        this.settingsContentPanel = new SettingsContentPanel(this);
 
         this.framePanel.add(homePanel, PanelNames.HOME);
         this.framePanel.add(badgeProgressPanel, PanelNames.BADGE_PROGRESS);
-        this.framePanel.add(journeyProgressPanel, PanelNames.JOURNEY_PROGRESS);
-        this.framePanel.add(memberInfoPanel, PanelNames.MEMBER_INFO);
-        this.framePanel.add(settingsPanel, PanelNames.SETTINGS);
+        this.framePanel.add(journeyProgressContentPanel, PanelNames.JOURNEY_PROGRESS);
+        this.framePanel.add(memberInfoContentPanel, PanelNames.MEMBER_INFO);
+        this.framePanel.add(settingsContentPanel, PanelNames.SETTINGS);
 
         this.getContentPane().setLayout(new BorderLayout());
         this.getContentPane().add(
@@ -60,7 +61,7 @@ public class MainFrame extends JFrame {
 
         switch(name) {
             case PanelNames.MEMBER_INFO:
-                if (this.memberInfoPanel.tryLoadData()) {
+                if (this.memberInfoContentPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
                 break;
@@ -70,12 +71,12 @@ public class MainFrame extends JFrame {
                 }
                 break;
             case PanelNames.JOURNEY_PROGRESS:
-                if (this.journeyProgressPanel.tryLoadData()) {
+                if (this.journeyProgressContentPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
                 break;
             case PanelNames.SETTINGS:
-                if (this.settingsPanel.tryLoadData()) {
+                if (this.settingsContentPanel.tryLoadData()) {
                     this.framePanelLayout.show(this.framePanel, name);
                 }
                 break;

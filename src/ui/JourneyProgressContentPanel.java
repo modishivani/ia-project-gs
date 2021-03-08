@@ -8,9 +8,9 @@ import db.MemberInformation;
 
 import java.util.ArrayList;
 
-public class JourneyProgressPanel extends ActivityProgressPanel {
+public class JourneyProgressContentPanel extends ActivityProgressContentPanel {
 
-    public JourneyProgressPanel(MainFrame mainFrame) throws DatabaseException {
+    public JourneyProgressContentPanel(MainFrame mainFrame) throws DatabaseException {
         super(mainFrame, "Journey");
     }
 
