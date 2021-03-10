@@ -6,6 +6,16 @@
   "parentName": "Kelly Smith",
   "parentEmail": "smithk@gmail.com",
   "badgeProgress": {
+    "Painting Badge": {
+      "name": "Painting Badge",
+      "stepProgress": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
     "Girl Scout Way": {
       "name": "Girl Scout Way",
       "stepProgress": [

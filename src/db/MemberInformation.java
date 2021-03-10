@@ -12,8 +12,8 @@ public class MemberInformation {
     private String email;
     private String parentName;
     private String parentEmail;
-    private Hashtable<String, ActivityProgress> badgeProgress;
-    private Hashtable<String, ActivityProgress> journeyProgress;
+    private final Hashtable<String, ActivityProgress> badgeProgress;
+    private final Hashtable<String, ActivityProgress> journeyProgress;
 
     public MemberInformation() {
         this.badgeProgress = new Hashtable<String, ActivityProgress>();
