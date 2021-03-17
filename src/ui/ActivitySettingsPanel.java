@@ -40,9 +40,9 @@ public abstract class ActivitySettingsPanel extends JPanel {
         this.mainFrame = mainFrame;
         this.activityKind = activityKind;
 
+        //set layout and border
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
-
         TitledBorder titledBorder = new TitledBorder(" " + this.activityKind + " Settings ");
         titledBorder.setTitleFont(titledBorder.getTitleFont().deriveFont(Font.ITALIC, 14f));
         this.setBorder(
@@ -51,6 +51,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
                         BorderFactory.createCompoundBorder(
                                 titledBorder,
                                 BorderFactory.createEmptyBorder(5, 5, 5, 5))));
+
+        //add components
         this.add(createActivityListPanel(), BorderLayout.WEST);
         this.add(createActivityInformationPanel(), BorderLayout.CENTER);
     }
@@ -62,8 +64,10 @@ public abstract class ActivitySettingsPanel extends JPanel {
         this.activityList = new JList<>(this.activityListModel);
         this.activityList.setFixedCellHeight(25);
         this.activityList.setOpaque(false);
+        //when an activity is clicked, show its details on the information fields
         this.activityList.addListSelectionListener(e -> showActivity(activityList.getSelectedValue()));
 
+        //set layout and borders
         activityListPanel.setLayout(new BorderLayout());
         activityListPanel.add(activityList, BorderLayout.CENTER);
         activityListPanel.setPreferredSize(new Dimension(200, 0));
@@ -81,6 +85,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
     }
 
     private JPanel createActivityInformationPanel() {
+        // set panel layout and borders
         JPanel activityInformationPanel = new JPanel();
         activityInformationPanel.setOpaque(false);
         TitledBorder titledBorder = new TitledBorder(" Information ");
@@ -93,6 +98,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
                                 BorderFactory.createEmptyBorder(5, 20, 5, 20))));
 
         activityInformationPanel.setLayout(new BorderLayout());
+
+        //add components - fields and buttons
         activityInformationPanel.add(createActivityFieldsPanel(), BorderLayout.NORTH);
         activityInformationPanel.add(createButtonsPanel(), BorderLayout.SOUTH);
         return activityInformationPanel;
@@ -104,6 +111,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
         GridLayout gridLayout = new GridLayout(7, 0, 10, 5);
         activityFieldsPanel.setLayout(gridLayout);
 
+        //add the fields to the panel
         activityFieldsPanel.add(this.activityNameField);
         activityFieldsPanel.add(this.descriptionField);
         activityFieldsPanel.add(this.step1Field);
@@ -118,6 +126,8 @@ public abstract class ActivitySettingsPanel extends JPanel {
     private JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setOpaque(false);
+
+        //call appropriate method when the associated button is clicked
         addButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -146,6 +156,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             }
         });
 
+        //add buttons
         buttonsPanel.add(addButton);
         buttonsPanel.add(editButton);
         buttonsPanel.add(saveButton);
@@ -157,7 +168,6 @@ public abstract class ActivitySettingsPanel extends JPanel {
     private void addActivity() {
         this.selectedActivityInformation = null;
         this.setActivityDetailEditable(true, true);
-
         ListSelectionModel sm = activityList.getSelectionModel();
         sm.clearSelection();
     }
@@ -167,13 +177,13 @@ public abstract class ActivitySettingsPanel extends JPanel {
     }
 
     private void saveActivity() {
-        String activityName = this.activityNameField.getText();
-
         ActivityInformation activityInformation = this.selectedActivityInformation;
         if (activityInformation == null) {
+            //for adding a member
             activityInformation = this.createActivityInformation();
         }
 
+        //save information from the fields in the ui to the activity information
         activityInformation.setName(this.activityNameField.getText());
         activityInformation.setDescription(this.descriptionField.getText());
         String[] activitySteps = {
@@ -185,6 +195,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
         };
         activityInformation.setSteps(activitySteps);
 
+        //call database method to save the data
         try {
             this.addOrModifyActivityInformation(activityInformation);
             if (!this.activityListModel.contains(activityInformation.getName())) {
@@ -200,6 +211,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             this.setActivityDetailEditable(false, false);
 
         } catch (Exception e){
+            //show error dialog box
             Utility.showException(this.mainFrame, e);
             return;
         }
@@ -207,6 +219,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
 
     private void deleteActivity() {
         String selectedValue = activityList.getSelectedValue();
+        //show deletion confirmation
         int input = JOptionPane.showConfirmDialog(  //yes = 0, no = 1
                 this.mainFrame,
                 "Are you sure you want to delete " + selectedValue + " ?",
@@ -218,9 +231,11 @@ public abstract class ActivitySettingsPanel extends JPanel {
         }
 
         try {
+            //call database method for deletion
             this.removeActivityInformation(selectedValue, false);
 
         } catch(ActivityInUseException e) {
+            //show message stating how many members have progress on that activity from the database exception message
             int input2 = JOptionPane.showConfirmDialog(  //yes = 0, no = 1
                     this.mainFrame,
                     e.getMessage() +
@@ -237,6 +252,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             return;
         }
 
+        //if they confirm, delete the activity
         try {
             this.removeActivityInformation(selectedValue, true);
         } catch (Exception e1) {
@@ -244,6 +260,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             return;
         }
 
+        //delete the activity from the list
         int selectedIndex = activityList.getSelectedIndex();
         this.activityListModel.remove(selectedIndex);
 
@@ -263,9 +280,10 @@ public abstract class ActivitySettingsPanel extends JPanel {
 
     private void showActivity(String selectedValue) {
         try {
-
             if (selectedValue != null) {
+                //get the database information for the selected activity
                 ActivityInformation activityInformation = this.getActivityInformation(selectedValue);
+                //fill the fields with the information from the database
                 this.activityNameField.setText(activityInformation.getName());
                 this.descriptionField.setText(activityInformation.getDescription());
                 this.step1Field.setText(activityInformation.getSteps()[0]);
@@ -287,6 +305,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
     }
 
     private void setActivityDetailEditable(boolean editable, boolean nameFieldEditable) {
+        //set fields editable based on parameters given
         this.activityNameField.setEditable(nameFieldEditable);
         this.descriptionField.setEditable(editable);
         this.step1Field.setEditable(editable);
@@ -295,7 +314,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
         this.step4Field.setEditable(editable);
         this.step5Field.setEditable(editable);
 
-        if (nameFieldEditable) {
+        if (nameFieldEditable) {    //for adding a member, all fields are set intially to empty
             this.activityNameField.setText("");
             this.descriptionField.setText("");
             this.step1Field.setText("");
@@ -305,6 +324,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             this.step5Field.setText("");
         }
 
+        //if both are not editable, save should not be enabled as there is nothing in the fields that still needs to be saved
         if (!editable && !nameFieldEditable) {
             this.addButton.setEnabled(true);
             this.deleteButton.setEnabled(true);
@@ -312,6 +332,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             this.saveButton.setEnabled(false);
         }
 
+        //if everything but name is editable, this is editing a activity - so the edit button has already been clicked and should not be enabled
         if (editable && !nameFieldEditable) {
             this.addButton.setEnabled(true);
             this.deleteButton.setEnabled(true);
@@ -319,6 +340,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
             this.saveButton.setEnabled(true);
         }
 
+        //if everything is enabled, this is adding an activity, so only the save button should be enabled
         if (editable && nameFieldEditable) {
             this.addButton.setEnabled(false);
             this.deleteButton.setEnabled(false);
@@ -358,6 +380,7 @@ public abstract class ActivitySettingsPanel extends JPanel {
         }
     }
 
+    //methods to override from badge and journey settings
     protected abstract ActivityInformation createActivityInformation();
     protected abstract ArrayList<String> getActivityNames();
     protected abstract ActivityInformation getActivityInformation(String name)

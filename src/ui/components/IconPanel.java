@@ -31,7 +31,7 @@ public class IconPanel extends JPanel {
         iconLabel.setBorder(new EmptyBorder(3, 3, 3, 3));
         iconLabel.setOpaque(false);
 
-        //// layout components
+        //layout components
         this.setLayout(new BorderLayout());
         this.add(iconLabel, BorderLayout.CENTER);
     }

@@ -14,6 +14,14 @@ class Argument {
         }
     }
 
+    static void ensureInteger(String argumentName, String argument) {
+        try {
+            Integer.parseInt(argument);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("The " + argumentName + " must be an integer.");
+        }
+    }
+
     static void ensureInRange(String argumentName, int argument, int lowerBound, int upperBound) {
         if ((argument < lowerBound) || (argument > upperBound)) {
             throw new IllegalArgumentException("The " + argumentName + " must be between " + lowerBound + " and " + upperBound + ".");

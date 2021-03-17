@@ -1,16 +1,16 @@
 {
-  "name": "Anna Smith",
-  "age": 15,
-  "grade": 9,
-  "email": "anna@gmail.com",
-  "parentName": "Kelly Smith",
-  "parentEmail": "smithk@gmail.com",
+  "name": "Jane Doe",
+  "age": 16,
+  "grade": 10,
+  "email": "janedoe@gmail.com",
+  "parentName": "John Doe",
+  "parentEmail": "johndoe@gmail.com",
   "badgeProgress": {
     "Painting Badge": {
       "name": "Painting Badge",
       "stepProgress": [
         true,
-        true,
+        false,
         false,
         false,
         false
@@ -21,8 +21,8 @@
       "stepProgress": [
         true,
         true,
-        true,
-        true,
+        false,
+        false,
         false
       ]
     },
@@ -35,16 +35,6 @@
         false,
         false
       ]
-    },
-    "Girl Scout Way": {
-      "name": "Girl Scout Way",
-      "stepProgress": [
-        false,
-        true,
-        false,
-        true,
-        false
-      ]
     }
   },
   "journeyProgress": {
@@ -52,19 +42,9 @@
       "name": "Outdoor Journey",
       "stepProgress": [
         true,
+        true,
         false,
         false,
-        false,
-        false
-      ]
-    },
-    "Engineering Journey": {
-      "name": "Engineering Journey",
-      "stepProgress": [
-        true,
-        true,
-        true,
-        true,
         false
       ]
     }

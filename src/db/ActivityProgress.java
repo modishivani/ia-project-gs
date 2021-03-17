@@ -21,7 +21,7 @@ public class ActivityProgress {
         return this.name;
     }
 
-     public boolean getStepProgress(int index) {
+    public boolean getStepProgress(int index) {
         Argument.ensureInRange("index", index, 0, this.stepProgress.length - 1);
         return this.stepProgress[index];
     }

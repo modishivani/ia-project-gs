@@ -21,20 +21,18 @@ public class Database {
     private final String membersDirectory;
     private final String badgesDirectory;
     private final String journeysDirectory;
-    private final String eventsDirectory;
 
     public Database() {
         this("42162", "2020-2021");
     }
 
-    public Database(
-        String troopNo,
-        String year) {
+    public Database(String troopNo, String year) {
 
         this.rootPath = System.getProperty("user.dir");
         this.troopNo = troopNo;
         this.year = year;
 
+        //get directory path for the different database directories
         this.membersDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "members").toString();
         EnsureDirectory(this.membersDirectory);
 
@@ -43,9 +41,6 @@ public class Database {
 
         this.journeysDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "journeys").toString();
         EnsureDirectory(this.journeysDirectory);
-
-        this.eventsDirectory = Paths.get(this.rootPath, this.troopNo, this.year, "events").toString();
-        EnsureDirectory(this.eventsDirectory);
     }
 
     public String getTroopNo() {
@@ -85,7 +80,7 @@ public class Database {
         ArrayList<String> memberNames = new ArrayList<>();
         File memberDirectory = new File(this.membersDirectory);
         String[] files = memberDirectory.list();
-
+        //delete .json from the names of the members, to populate the list with
         if (files != null) {
             for (String fileName : files) {
                 if (fileName.endsWith(".json")) {
@@ -108,10 +103,11 @@ public class Database {
         );
     }
 
-
     private String getMemberFileName(String name) {
         return Paths.get(this.membersDirectory, name + ".json").toString();
     }
+
+
 
     /*
       Badges
@@ -130,7 +126,7 @@ public class Database {
             throws DatabaseException {
 
         int usedBy = 0;
-
+        //count how many members have progress for the activity
         for(String memberName: this.listMemberNames()) {
             MemberInformation memberInformation = this.getMember(memberName);
             Hashtable<String, ActivityProgress> badgeProgress = memberInformation.getBadgeProgress();
@@ -143,6 +139,7 @@ public class Database {
             }
         }
 
+        //throw an exception if this activity is used by members
         if (!removeProgress && (usedBy > 0)) {
             throw new ActivityInUseException(usedBy + " member(s) have progress for this badge.");
         }
@@ -160,6 +157,7 @@ public class Database {
         File badgeDirectory = new File(this.badgesDirectory);
         String[] files = badgeDirectory.list();
 
+        //delete .json from the names of the members, to populate the list with
         if (files != null) {
             for (String fileName : files) {
                 if (fileName.endsWith(".json")) {
@@ -191,7 +189,9 @@ public class Database {
     /*
       Journeys
      */
-    public void addOrModifyJourney(JourneyInformation journeyInformation) throws DatabaseException {
+    public void addOrModifyJourney(
+            JourneyInformation journeyInformation)
+            throws DatabaseException {
         journeyInformation.validate();
         writeObject(
                 journeyInformation,
@@ -201,9 +201,8 @@ public class Database {
 
     public void removeJourney(String name, boolean removeProgress)
         throws DatabaseException {
-
+        //count how many members have progress for the activity
         int usedBy = 0;
-
         for(String memberName: this.listMemberNames()) {
             MemberInformation memberInformation = this.getMember(memberName);
             Hashtable<String, ActivityProgress> journeyProgress = memberInformation.getJourneyProgress();
@@ -216,16 +215,16 @@ public class Database {
             }
         }
 
+        //if members use the activity, throw an exception
         if (!removeProgress && (usedBy > 0)) {
-            throw new ActivityInUseException(usedBy + " member(s) have progress for this journey.");
+            throw new ActivityInUseException(
+                    usedBy + " member(s) have progress for this journey.");
         }
-
         String journeyFileName = getJourneyFileName(name);
         File journeyFile = new File(journeyFileName);
         if (journeyFile.exists()) {
             journeyFile.delete();
         }
-
     }
 
     public ArrayList<String> listJourneyNames() {
@@ -234,6 +233,7 @@ public class Database {
         File journeyDirectory = new File(this.journeysDirectory);
         String[] files = journeyDirectory.list();
 
+        //delete .json from the names of the members, to populate the list with
         if (files != null) {
             for (String fileName : files) {
                 if (fileName.endsWith(".json")) {
@@ -264,6 +264,11 @@ public class Database {
         File f = new File(directory);
         f.mkdirs();
     }
+
+
+    /*
+    Write and Read Objects
+     */
 
     private void writeObject(Object src, String fileName) throws DatabaseException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

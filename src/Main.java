@@ -5,23 +5,24 @@ import ui.MainFrame;
 import javax.swing.*;
 
 public class Main {
-    static final int PANEL_WIDTH = 800;
-    static final int PANEL_HEIGHT = 800;
-
     public static void main(String args[]) throws DatabaseException {
 
+
+        // set look and feel for the entire application
         try {
             UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }
 
+        // create mainframe
         MainFrame mainFrame = new MainFrame();
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
 
 
+        // exit confirmation dialog
         mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {

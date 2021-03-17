@@ -18,16 +18,8 @@ public class LargeIconButton extends JButton {
     private final int width;
     private final int height;
 
-    public LargeIconButton(
-            String imageLocation,
-            String title,
-            String description) {
-        this(
-            imageLocation,
-            title,
-            description,
-            DEFAULT_WIDTH,
-            DEFAULT_HEIGHT);
+    public LargeIconButton(String imageLocation, String title, String description) {
+        this(imageLocation, title, description, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     public LargeIconButton(
@@ -36,7 +28,6 @@ public class LargeIconButton extends JButton {
             String description,
             int width,
             int height) {
-
         super();
         this.imageLocation = imageLocation;
         this.title = title;
@@ -58,7 +49,7 @@ public class LargeIconButton extends JButton {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
 
-        //// create components
+        // create components
 
         // image
         ImageIcon tmpIcon = new ImageIcon(this.getClass().getResource(this.imageLocation));
@@ -68,7 +59,7 @@ public class LargeIconButton extends JButton {
         iconLabel.setBorder(new EmptyBorder(10,5,5,5));
         iconLabel.setOpaque(false);
 
-        //// layout components
+        // layout components
         panel.setLayout(new BorderLayout());
         panel.setPreferredSize(new Dimension(ICON_SIZE, this.height));
         panel.add(iconLabel, BorderLayout.NORTH);
@@ -80,7 +71,7 @@ public class LargeIconButton extends JButton {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
 
-        //// create component
+        // create components
 
         // title
         JLabel titleLabel = new JLabel(title, JLabel.LEFT);
@@ -100,7 +91,7 @@ public class LargeIconButton extends JButton {
         descriptionArea.setOpaque(false);
         descriptionArea.setEnabled(false);
 
-        //// layout components
+        // layout components
         panel.setLayout(new BorderLayout());
         panel.add(titleLabel, BorderLayout.NORTH);
         panel.add(descriptionArea, BorderLayout.CENTER);

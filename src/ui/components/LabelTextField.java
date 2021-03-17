@@ -22,10 +22,14 @@ public class LabelTextField extends JPanel{
         this.textField = new JTextField();
         this.setOpaque(false);
 
+        //layout
         this.setLayout(new BorderLayout());
+
+        // add components
         this.add(labelField, BorderLayout.WEST);
         this.add(textField, BorderLayout.CENTER);
 
+        //border
         this.setBorder(new EmptyBorder(5,5,5,50));
 
     }

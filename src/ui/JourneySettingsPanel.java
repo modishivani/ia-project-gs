@@ -10,6 +10,7 @@ public class JourneySettingsPanel extends ActivitySettingsPanel {
         super(mainFrame, "Journey");
     }
 
+    // override Activity Settings Panel methods with journey methods
     @Override
     protected ActivityInformation createActivityInformation() {
         return new JourneyInformation();

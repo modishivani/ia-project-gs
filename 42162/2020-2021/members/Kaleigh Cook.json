@@ -1,11 +1,41 @@
 {
   "name": "Kaleigh Cook",
-  "age": 15,
+  "age": 16,
   "grade": 9,
   "email": "kaleighc@live.com",
   "parentName": "Laney Cook",
   "parentEmail": "laney.cook@gmail.com",
   "badgeProgress": {
+    "Painting Badge": {
+      "name": "Painting Badge",
+      "stepProgress": [
+        true,
+        true,
+        false,
+        false,
+        false
+      ]
+    },
+    "Girl Scout Way Badge": {
+      "name": "Girl Scout Way Badge",
+      "stepProgress": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "Drawing Badge": {
+      "name": "Drawing Badge",
+      "stepProgress": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
+    },
     "Girl Scout Way": {
       "name": "Girl Scout Way",
       "stepProgress": [
@@ -25,6 +55,16 @@
         true,
         false,
         true,
+        false
+      ]
+    },
+    "Outdoor Journey": {
+      "name": "Outdoor Journey",
+      "stepProgress": [
+        true,
+        false,
+        false,
+        false,
         false
       ]
     }

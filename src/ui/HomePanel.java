@@ -22,7 +22,7 @@ public class HomePanel extends JPanel {
 
         this.mainFrame = mainFrame;
 
-        //// create components
+        // create components
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
         titlePanel.setLayout(new BorderLayout());
@@ -31,12 +31,13 @@ public class HomePanel extends JPanel {
         titleText.setFont(titleText.getFont().deriveFont(64f));
         titleText.setHorizontalAlignment(JLabel.CENTER);
 
+        // set image for the home panel
         IconPanel gsLogo = new IconPanel("/images/girlScoutLogo.png");
         gsLogo.setBorder(new EmptyBorder(10,10,10,10));
         titlePanel.add(titleText, BorderLayout.NORTH);
         titlePanel.add(gsLogo, BorderLayout.CENTER);
 
-        //// layout components
+        // layout components
         this.setLayout(new BorderLayout());
         this.add(titlePanel, BorderLayout.NORTH);
         this.add(createButtonPanel(), BorderLayout.CENTER);
@@ -49,6 +50,7 @@ public class HomePanel extends JPanel {
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new FlowLayout());
 
+        // create button components for each internal content panel of the application
         LargeIconButton membersButton = new LargeIconButton(
                 "/images/memberIcon.png",
                 "Member Information",
@@ -93,6 +95,8 @@ public class HomePanel extends JPanel {
             }
         });
 
+
+        // add buttons to the panel
         buttonPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         buttonPanel.add(membersButton);
         buttonPanel.add(settingsButton);

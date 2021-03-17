@@ -33,6 +33,7 @@ public class ActivityInformation {
     }
 
     void validate() throws IllegalArgumentException {
+        //ensures that activity information is valid, if it is not valid, throw an exception
         Argument.ensureNotNullOrEmpty("activity name", this.name);
         Argument.ensureNotNullOrEmpty("activity description", this.description);
         Argument.ensureNotNullOrEmpty("activity step 1", this.steps[0]);

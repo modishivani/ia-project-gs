@@ -29,12 +29,15 @@ public class SettingsContentPanel extends ContentPanel {
         CardLayout settingsDisplayLayout = new CardLayout();
         settingsDisplayPanel.setLayout(settingsDisplayLayout);
 
+        // create badge and journey settings panels
         this.badgeSettingsPanel = new BadgeSettingsPanel(this.mainFrame);
         this.journeySettingsPanel = new JourneySettingsPanel(this.mainFrame);
 
+        // add badge and journey settings panel to the card layout
         settingsDisplayPanel.add(this.badgeSettingsPanel, "Badges");
         settingsDisplayPanel.add(this.journeySettingsPanel, "Journeys");
 
+        // add functionality to badge and journey settings button to toggle between the panels
         settingsDisplayLayout.show(settingsDisplayPanel, "Badges");
         this.badgeSettingsPanel.loadData();
         badgeSettingsButton.setEnabled(false);
@@ -62,6 +65,8 @@ public class SettingsContentPanel extends ContentPanel {
             }
         });
 
+
+        // add components
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(createBadgeJourneyButtonsPanel(), BorderLayout.NORTH);
         centerPanel.add(settingsDisplayPanel, BorderLayout.CENTER);
@@ -70,7 +75,6 @@ public class SettingsContentPanel extends ContentPanel {
     }
 
     private void createComponents() {
-
         this.badgeSettingsButton = new JButton(" Badge Settings ");
         this.journeySettingsButton = new JButton(" Journey Settings ");
     }
@@ -80,6 +84,7 @@ public class SettingsContentPanel extends ContentPanel {
         badgeJourneyButtonsPanel.setOpaque(false);
         badgeJourneyButtonsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+        // set logos for the for badge and journey settings buttons
         ImageIcon tmpIcon = new ImageIcon(this.getClass().getResource("/images/badgeIcon.png"));
         Image image = tmpIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon badgesIcon = new ImageIcon(image);
@@ -88,11 +93,13 @@ public class SettingsContentPanel extends ContentPanel {
         Image image2 = tmp2Icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon journeysIcon = new ImageIcon(image2);
 
+        // set color schemes for buttons
         this.badgeSettingsButton.setIcon(badgesIcon);
         this.badgeSettingsButton.setForeground(ColorScheme.DarkGreen);
         this.journeySettingsButton.setIcon(journeysIcon);
         this.journeySettingsButton.setForeground(ColorScheme.DarkGreen);
 
+        // add components
         badgeJourneyButtonsPanel.add(this.badgeSettingsButton);
         badgeJourneyButtonsPanel.add(this.journeySettingsButton);
 

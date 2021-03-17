@@ -20,6 +20,8 @@ public class MemberInformation {
         this.journeyProgress = new Hashtable<String, ActivityProgress>();
     }
 
+    //getter and setter methods for the class variables
+
     public String getName() {
         return name;
     }
@@ -36,12 +38,24 @@ public class MemberInformation {
         this.age = age;
     }
 
+    public void setAge(String ageStr) {
+        //making sure that the input is a number
+        Argument.ensureInteger("member age", ageStr);
+        this.age = Integer.parseInt(ageStr);
+    }
+
     public int getGrade() {
         return grade;
     }
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    public void setGrade(String gradeStr) {
+        //making sure that the input is a number
+        Argument.ensureInteger("member grade", gradeStr);
+        this.grade = Integer.parseInt(gradeStr);
     }
 
     public String getEmail() {
@@ -79,6 +93,7 @@ public class MemberInformation {
     void validate()
             throws IllegalArgumentException {
 
+        //validate member information variables
         Argument.ensureNotNullOrEmpty("member name", this.name);
         Argument.ensureInRange("member age", this.age, 0, 18);
         Argument.ensureInRange("member grade", this.grade, 0, 12);

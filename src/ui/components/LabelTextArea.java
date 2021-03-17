@@ -15,6 +15,8 @@ public class LabelTextArea extends JPanel{
         super();
 
         JLabel fieldTitle = new JLabel(label);
+
+        //bolded font, color, and borders
         Utility utility = new Utility();
         utility.setBoldFont(fieldTitle);
         fieldTitle.setForeground(ColorScheme.DarkGreen);
@@ -24,8 +26,9 @@ public class LabelTextArea extends JPanel{
         this.setOpaque(false);
 
         this.textLabel.setVerticalAlignment(JLabel.CENTER);
-
         this.setLayout(new BorderLayout());
+
+        //add components
         this.add(fieldTitle, BorderLayout.WEST);
         this.add(textLabel, BorderLayout.CENTER);
 
@@ -34,6 +37,7 @@ public class LabelTextArea extends JPanel{
     }
 
     public void setText(String text) {
+        //align text to the left using html
         this.textLabel.setText(
                 String.format("<html><body style=\"text-align: left; \">%s</body></html>",
                         text));

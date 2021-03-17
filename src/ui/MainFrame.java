@@ -57,8 +57,7 @@ public class MainFrame extends JFrame {
     }
 
     public void setMainPanel(String name) {
-
-
+        // switch between panels and load data for the selected panel
         switch(name) {
             case PanelNames.MEMBER_INFO:
                 if (this.memberInfoContentPanel.tryLoadData()) {
@@ -83,8 +82,6 @@ public class MainFrame extends JFrame {
             default:
                 this.framePanelLayout.show(this.framePanel, name);
         }
-
-
     }
 
     Database getDb() {

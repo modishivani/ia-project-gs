@@ -35,7 +35,7 @@ public class IconCaptionButton extends JButton {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
 
-        //// create components
+        // create components
 
         // image
         ImageIcon tmpIcon = new ImageIcon(this.getClass().getResource(this.imageLocation));
@@ -45,7 +45,7 @@ public class IconCaptionButton extends JButton {
         iconLabel.setBorder(new EmptyBorder(3,3,3,3));
         iconLabel.setOpaque(false);
 
-        //// layout components
+        // layout components
         panel.setLayout(new BorderLayout());
         panel.add(iconLabel, BorderLayout.CENTER);
 
@@ -56,7 +56,7 @@ public class IconCaptionButton extends JButton {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
 
-        //// create component
+        // create component
 
         // title
         JLabel titleLabel = new JLabel(title, JLabel.CENTER);
@@ -64,7 +64,7 @@ public class IconCaptionButton extends JButton {
         titleLabel.setOpaque(false);
         Utility.setBoldFont(titleLabel);
 
-        //// layout components
+        // layout components
         panel.setLayout(new BorderLayout());
         panel.add(titleLabel, BorderLayout.CENTER);
         return panel;

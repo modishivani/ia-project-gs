@@ -9,7 +9,7 @@ public class BadgeSettingsPanel extends ActivitySettingsPanel {
     public BadgeSettingsPanel(MainFrame mainFrame) {
         super(mainFrame, "Badge");
     }
-
+    // override Activity Settings Panel methods with badge methods
     @Override
     protected ActivityInformation createActivityInformation() {
         return new BadgeInformation();
